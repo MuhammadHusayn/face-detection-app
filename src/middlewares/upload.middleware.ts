@@ -8,7 +8,7 @@ import fs from 'fs';
 type DestinationCallback = (error: HttpException | null, destination: string) => void;
 type FileNameCallback = (error: HttpException | null, filename: string) => void;
 
-const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allowedFileSize: number, fileName: string) => {
+const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allowedFileSize: number, reqFileKeyName: string) => {
     return (req: Request, res: Response, next: NextFunction) => {
         // create temp folder for file upload if not exists
         if (!fs.existsSync(uploadFolder)) {
@@ -52,7 +52,7 @@ const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allo
         };
 
         // first get file stream, write it to temp folder, upload it to aws and delete from temp folder
-        return multer({ storage, fileFilter, limits: { fileSize: allowedFileSize } }).single(fileName)(req, res, async error => {
+        return multer({ storage, fileFilter, limits: { fileSize: allowedFileSize } }).single(reqFileKeyName)(req, res, async error => {
             try {
                 if (error && error instanceof HttpException) {
                     throw error;
