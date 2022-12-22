@@ -1,3 +1,4 @@
+import validateEnv from '@utils/validateEnv';
 import { DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
 import 'reflect-metadata';
@@ -5,6 +6,7 @@ import path from 'path';
 
 // load env variables
 config({ path: `.env.${process.env.NODE_ENV || 'development'}.local` });
+validateEnv();
 
 // cors config options
 export const CORS_OPTIONS = {
