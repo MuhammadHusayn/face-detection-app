@@ -44,17 +44,11 @@ class App {
         return this.app;
     }
 
-    private initializeDatabase() {
+    private async initializeDatabase() {
         const AppDataSource = new DataSource(DB_CONFIG);
 
-        AppDataSource.initialize()
-            .then(() => {
-                console.log('Database: database connected!');
-            })
-            .then(loadSeed)
-            .catch(err => {
-                console.error(`Database: ${err.message || err}`);
-            });
+        await AppDataSource.initialize();
+        //await loadSeed();
     }
 
     private initializeMiddlewares() {
