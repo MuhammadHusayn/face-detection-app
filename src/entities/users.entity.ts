@@ -6,20 +6,29 @@ export class UserEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: number;
 
-    @Column({ type: 'varchar', unique: true, nullable: false })
+    @Column({ type: 'varchar', nullable: false })
     firstName: string;
 
-    @Column({ type: 'varchar', unique: true, nullable: false })
+    @Column({ type: 'varchar', nullable: false })
     lastName: string;
 
     @Column({ type: 'varchar', nullable: false })
     userImg: string;
 
-    @ManyToOne(() => BranchEntity, branch => branch.users)
-    branch: BranchEntity;
+    @Column({ type: 'varchar', unique: true, nullable: true })
+    username: string;
+
+    @Column({ type: 'varchar', nullable: true })
+    password: string;
+
+    @Column({ type: 'boolean', nullable: false })
+    isAdmin: boolean;
 
     @Column({ type: 'varchar', nullable: false })
     allowedBranches: string;
+
+    @ManyToOne(() => BranchEntity, branch => branch.users)
+    branch: BranchEntity;
 
     @Column({ type: 'datetime' })
     @CreateDateColumn()
