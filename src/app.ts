@@ -23,8 +23,8 @@ class App {
         this.env = process.env.NODE_ENV || 'development';
         this.port = process.env.PORT || 3000;
 
-        this.initializeDatabase();
         this.initializeClient();
+        this.initializeDatabase();
         this.initializeMiddlewares();
         this.initializeRoutes(routes);
         this.initializeSwagger();
