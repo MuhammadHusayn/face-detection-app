@@ -48,7 +48,7 @@ class App {
         const AppDataSource = new DataSource(DB_CONFIG);
 
         await AppDataSource.initialize();
-        //await loadSeed();
+        await loadSeed();
     }
 
     private initializeMiddlewares() {
