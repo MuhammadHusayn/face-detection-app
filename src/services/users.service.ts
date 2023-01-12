@@ -1,5 +1,4 @@
-import { Errors } from './../types/enums/errors.enum';
-import { HttpException } from '@utils/HttpException';
+import { HttpException, Errors } from '@utils/HttpException';
 import { UserEntity } from '@entities/users.entity';
 import { CreateUserDto } from '@dtos/users.dto';
 import { isObjectEmpty } from '@utils/util';

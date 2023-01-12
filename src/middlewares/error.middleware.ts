@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { HttpException } from '@utils/HttpException';
-import { Errors } from '@enums/errors.enum';
+import { HttpException, Errors } from '@utils/HttpException';
 import { logger } from '@utils/logger';
 
 const errorMiddleware = (err: HttpException, req: Request, res: Response, next: NextFunction) => {

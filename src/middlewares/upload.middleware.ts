@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { HttpException } from '@utils/HttpException';
+import { HttpException, Errors } from '@utils/HttpException';
 import multer, { FileFilterCallback } from 'multer';
-import { Errors } from '@enums/errors.enum';
 import path from 'path';
 import fs from 'fs';
 
