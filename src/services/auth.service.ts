@@ -1,29 +1,32 @@
-import jwt from 'jsonwebtoken';
-import { Errors } from './../types/enums/errors.enum';
-import { HttpException } from '@utils/HttpException';
+// import jwt from 'jsonwebtoken';
+import { HttpException, Errors } from '@utils/HttpException';
+import { JWT }  from 'lib/Ejs';
 import { UserEntity } from '@entities/users.entity';
 import { UserSingIn } from '@dtos/users.dto';
-import { isObjectEmpty } from '@utils/util';
 
 export class AuthService {
     
-    async singIn(body: UserSingIn) {
-        const user = await UserEntity.findBy({username: body.username, password: body.password, isAdmin: true});
-        if (!user[0]) {
+    async singIn(body: UserSingIn, res: any, req: any) {
+
+        const checkClientToken = req.cookies
+        
+        const [user] = await UserEntity.findBy({username: body.username, password: body.password, isAdmin: true});
+
+        if (!user) {
             throw new HttpException(404, Errors.USER_NOT_EXISTS, 'User not found!');
         }
-            // interface JwtPayload {
-            //     exp: any
-            // }
-            
-            
-            const secretKey = process.env.JWT_SECRET
-            
-            // const token = jwt.sign({token: user[0].id.toString() as string}, secretKey as string, { expiresIn: '10s' })
-            const token = jwt.sign({token: user[0].id.toString() as string}, secretKey as string, { expiresIn: '10m'});
-            console.log(token);
-            
-            const verifiyed = jwt.verify(token as string, secretKey as string)
-            console.log(verifiyed);
+        
+        const token = JWT.createAccessToken({userId: user.id} as any);
+        
+        if(!checkClientToken.token){
+            res.setHeader('Set-Cookie', 'token='+token)
+        }
+
+        return {
+            first_name: user.firstName,
+            last_name: user.lastName,
+            admin: user.isAdmin
+        }
+        
     }
 }

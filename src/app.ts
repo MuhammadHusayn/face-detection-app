@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import { DataSource } from 'typeorm';
 import { loadSeed } from './seed';
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import yaml from 'yamljs';
@@ -59,6 +60,7 @@ class App {
         this.app.use(helmet());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
+        this.app.use(cookieParser());
     }
 
     private initializeRoutes(routes: Routes[]) {

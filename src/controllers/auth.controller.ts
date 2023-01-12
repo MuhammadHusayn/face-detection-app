@@ -10,9 +10,9 @@ class AuthController {
     getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const body = req.body
-            const users = await this.AuthService.singIn(body);
+            const users = await this.AuthService.singIn(body, res, req);
             
-            // res.status(200).json(serializer(UserSingIn, users));
+            res.status(200).json(users);
         } catch (error) {
             next(error);
         }
