@@ -23,8 +23,8 @@ class App {
         this.env = process.env.NODE_ENV || 'development';
         this.port = process.env.PORT || 3000;
 
-        this.initializeDatabase();
         this.initializeClient();
+        this.initializeDatabase();
         this.initializeMiddlewares();
         this.initializeRoutes(routes);
         this.initializeSwagger();
@@ -44,17 +44,11 @@ class App {
         return this.app;
     }
 
-    private initializeDatabase() {
+    private async initializeDatabase() {
         const AppDataSource = new DataSource(DB_CONFIG);
 
-        AppDataSource.initialize()
-            .then(() => {
-                console.log('Database: database connected!');
-            })
-            .then(loadSeed)
-            .catch(err => {
-                console.error(`Database: ${err.message || err}`);
-            });
+        await AppDataSource.initialize();
+        await loadSeed();
     }
 
     private initializeMiddlewares() {
