@@ -1,8 +1,7 @@
 import { RequestHandler, NextFunction, Request, Response } from 'express';
+import { HttpException, Errors } from '@utils/HttpException';
 import { validate, ValidationError } from 'class-validator';
-import { HttpException } from '@utils/HttpException';
 import { plainToInstance } from 'class-transformer';
-import { Errors } from '@enums/errors.enum';
 
 const validationMiddleware = (
     type: ClassType,
