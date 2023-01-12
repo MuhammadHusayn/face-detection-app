@@ -1,6 +1,5 @@
-import { HttpException } from '@utils/HttpException';
+import { HttpException, Errors } from '@utils/HttpException';
 import { plainToInstance } from 'class-transformer';
-import { Errors } from '@enums/errors.enum';
 
 export const serializer = <T>(dto: T, data: KeyValueObjectType | KeyValueObjectType[] | null): T | T[] => {
     try {
