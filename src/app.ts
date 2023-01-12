@@ -18,6 +18,7 @@ class App {
     public env: string;
     public port: string | number;
 
+    
     constructor(routes: Routes[]) {
         this.app = express();
         this.env = process.env.NODE_ENV || 'development';
@@ -61,6 +62,7 @@ class App {
     }
 
     private initializeRoutes(routes: Routes[]) {
+        
         routes.forEach(route => {
             this.app.use('/', route.router);
         });

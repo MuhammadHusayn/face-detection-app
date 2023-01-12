@@ -1,25 +1,18 @@
 import { IsEmail, IsString, MaxLength, NotEquals } from 'class-validator';
 import { Expose, Transform, TransformFnParams } from 'class-transformer';
 
-export class CreateUserDto {
+export class UserSingIn {
     @IsString()
-    @IsEmail()
-    @MaxLength(100)
+    @MaxLength(32)
     @Transform(({ value }: TransformFnParams) => value?.trim())
     @NotEquals('', { message: '$property must not be empty string' })
-    email: string;
+    username: string;
 
     @IsString()
     @MaxLength(16)
     @Transform(({ value }: TransformFnParams) => value?.trim())
     @NotEquals('', { message: '$property must not be empty string' })
     password: string;
-
-    @IsString()
-    @MaxLength(100)
-    @Transform(({ value }: TransformFnParams) => value?.trim())
-    @NotEquals('', { message: '$property must not be empty string' })
-    fullName: string;
 }
 
 export class UserDto {
