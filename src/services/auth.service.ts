@@ -11,7 +11,7 @@ export class AuthService {
             throw new HttpException(404, Errors.USER_NOT_EXISTS, 'User not found!');
         }
 
-        const accessToken = JWT.createAccessToken({ userId: user.id });
+        const accessToken = JWT.createAccessToken({ userId: user.id });        
 
         return accessToken;
     }
