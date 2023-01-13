@@ -5,13 +5,17 @@ import { JWT } from '@lib/Jwt';
 
 export class AuthService {
     async login(body: LoginDto): Promise<string> {
-        const [user] = await UserEntity.findBy({ username: body.username, password: body.password, isAdmin: true });
+        const [user] = await UserEntity.findBy({ username: body.username, password: body.password });
 
         if (!user) {
-            throw new HttpException(404, Errors.USER_NOT_EXISTS, 'User not found!');
+            throw new HttpException(404, Errors.WRONG_PASSWORD, 'Username yoki Parol xato!');
         }
 
-        const accessToken = JWT.createAccessToken({ userId: user.id });        
+        if (user.isAdmin !== true) {
+            throw new HttpException(403, Errors.FORBIDDEN_ERROR, 'Siz uchun ruxsat yoq!');
+        }
+
+        const accessToken = JWT.createAccessToken({ userId: user.id });
 
         return accessToken;
     }

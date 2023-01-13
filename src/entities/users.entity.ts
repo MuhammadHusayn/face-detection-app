@@ -4,7 +4,7 @@ import { BranchEntity } from './branches.entity';
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
     @Column({ type: 'varchar', nullable: false })
     firstName: string;

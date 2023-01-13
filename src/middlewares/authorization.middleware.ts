@@ -1,24 +1,27 @@
 import { Request, Response, NextFunction } from 'express';
-import { HttpException, Errors } from '@utils/HttpException';
+import { UserEntity } from '@entities/users.entity';
 import { JWT } from '@lib/Jwt';
-const authorizationMiddleware = () => {
-    return (req: Request, res: Response, next: NextFunction) => {
 
-        const cookie = req.cookies.accessToken
-        
-        if(!cookie){
-            throw new HttpException(400, Errors.VALIDATION_ERROR, 'UNAUTHORIZED')
-            // res.redirect('/login')
-        } 
-
-        const asd = JWT.verifyAccessToken(cookie)
-        if(!asd) {
-            throw new HttpException(400, Errors.VALIDATION_ERROR, 'UNAUTHORIasdadsaZED')
-            // res.redirect('/login')
+const authorizationMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        if (!req.cookies || !req.cookies.accessToken) {
+            return res.clearCookie('accessToken').redirect('/login');
         }
 
-        next()
-    };
+        const { accessToken } = req.cookies;
+
+        const payload = JWT.verifyAccessToken(accessToken);
+
+        const [user] = await UserEntity.findBy({ id: payload.userId });
+
+        if (!user) {
+            return res.clearCookie('accessToken').redirect('/login');
+        }
+
+        next();
+    } catch (error) {
+        next(error);
+    }
 };
 
 export default authorizationMiddleware;

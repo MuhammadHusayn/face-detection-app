@@ -9,11 +9,10 @@ class AuthController {
         try {
             const body: LoginDto = req.body;
             const accessToken = await this.authService.login(body);
-            
+
             res.cookie('accessToken', accessToken, {
-                
-                maxAge: Number(process.env.JWT_EXPIRES_EXPIRATION),
-            }).end();
+                maxAge: Number(process.env.JWT_ACCESS_EXPIRATION),
+            }).redirect('/');
         } catch (error) {
             next(error);
         }

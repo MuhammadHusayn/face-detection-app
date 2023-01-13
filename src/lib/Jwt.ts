@@ -2,7 +2,7 @@ import { HttpException, Errors } from '@utils/HttpException';
 import { sign, verify } from 'jsonwebtoken';
 
 export interface IAccessTokenPayload {
-    userId: string | number;
+    userId: string;
 }
 
 export class JWT {

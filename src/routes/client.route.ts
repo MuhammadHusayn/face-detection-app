@@ -11,8 +11,10 @@ class ClientRoute implements Routes {
     }
 
     private initializeRoutes() {
-        this.router.post('/', authorizationMiddleware(), (req: Request, res: Response) => res.sendFile(path.join(process.cwd(), 'src/client/index.html')));
-        this.router.get('/login', (req: Request, res: Response) => res.sendFile(path.join(process.cwd(), 'src/client/login.html')));
+        this.router.get('/', authorizationMiddleware, (req: Request, res: Response) => {
+            res.sendFile(path.join(process.cwd(), 'src/views/index.html'));
+        });
+        this.router.get('/login', (req: Request, res: Response) => res.sendFile(path.join(process.cwd(), 'src/views/login.html')));
     }
 }
 

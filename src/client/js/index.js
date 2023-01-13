@@ -10,4 +10,20 @@ form.addEventListener('submit', async (e) => {
     if(alert_wrapper.childElementCount <= 2){
         alert_wrapper.appendChild(alert('asdfasdads~asdasd', 10, 'danger'))
     }
+
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: inputLogin.value,
+                password: inputPassword.value,
+            })
+        })
+
+
+        console.log(response)
 })
+
+
