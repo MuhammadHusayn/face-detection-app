@@ -3,10 +3,10 @@ import errorMiddleware from '@middlewares/error.middleware';
 import { Routes } from '@interfaces/routes.interface';
 import { logger, stream } from '@utils/logger';
 import swaggerUi from 'swagger-ui-express';
+import cookieParser from 'cookie-parser';
 import { DataSource } from 'typeorm';
 import { loadSeed } from './seed';
 import express from 'express';
-import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import yaml from 'yamljs';
@@ -55,11 +55,11 @@ class App {
     private initializeMiddlewares() {
         this.app.use(morgan(process.env.LOG_FORMAT as string, { stream }));
         this.app.use(cors(CORS_OPTIONS));
+        this.app.use(cookieParser());
         this.app.use(hpp());
         this.app.use(helmet());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
-        this.app.use(cookieParser());
     }
 
     private initializeRoutes(routes: Routes[]) {

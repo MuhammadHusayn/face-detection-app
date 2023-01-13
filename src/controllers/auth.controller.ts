@@ -1,18 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
-import { UserSingIn } from '@dtos/users.dto';
-import { stringValuesToPrimitives } from '@utils/util';
 import { AuthService } from '@services/auth.service';
-import { serializer } from '@utils/serializer';
+import { LoginDto } from '@dtos/auth.dto';
 
 class AuthController {
-    AuthService = new AuthService();
+    authService = new AuthService();
 
-    getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const body = req.body;
-            const users = await this.AuthService.singIn(body, res, req);
+            const body: LoginDto = req.body;
+            const accessToken = await this.authService.login(body);
 
-            res.status(200).json(users);
+            res.cookie('accessToken', accessToken, {
+                maxAge: Number(process.env.JWT_ACCESS_EXPIRATION),
+            }).end();
         } catch (error) {
             next(error);
         }

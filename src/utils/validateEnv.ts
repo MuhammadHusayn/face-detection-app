@@ -1,11 +1,11 @@
-import { cleanEnv, port, str, bool } from 'envalid';
+import { cleanEnv, port, str, bool, num } from 'envalid';
 
 const validateEnv = () => {
     cleanEnv(process.env, {
         NODE_ENV: str({ choices: ['development', 'production'] }),
-        JWT_ACCESS_EXPIRATION: str(),
-        CREDENTIALS: bool(),
+        JWT_ACCESS_EXPIRATION: num(),
         JWT_ACCESS_SECRET: str(),
+        CREDENTIALS: bool(),
         LOG_FORMAT: str(),
         LOG_DIR: str(),
         DB_NAME: str(),
