@@ -1,7 +1,8 @@
-import { BranchDto, CreateBranchDto } from '@/dtos/branches.dto';
+import { BranchDto, CreateBranchDto, UpdateBranchDto } from '@/dtos/branches.dto';
 import { BranchService } from '@/services/branches.service';
 import { NextFunction, Request, Response } from 'express';
 import { serializer } from '@/utils/serializer';
+import { stringValuesToPrimitives } from '@/utils/util';
 
 class BranchController {
     branchService = new BranchService();
@@ -15,16 +16,31 @@ class BranchController {
             next(error);
         }
     };
-    
+
     postBranch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const body: CreateBranchDto = req.body
-            
+            const body: CreateBranchDto = req.body;
+
             const branch = await this.branchService.createBranch(body);
 
             res.status(201).json({
                 status: 201,
-                message: 'Branch successfully created!'
+                message: 'Branch successfully created!',
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    updateBranch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const params = stringValuesToPrimitives(req.params || {}) as { id?: number };
+            const body: UpdateBranchDto = req.body;
+            const branch = await this.branchService.UpdateBranch(params, body);
+
+            res.status(200).json({
+                status: 201,
+                message: 'Branch successfully updated!',
             });
         } catch (error) {
             next(error);
