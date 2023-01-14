@@ -1,41 +1,42 @@
+import { CreateBranchDto, UpdateBranchDto } from '@dtos/branches.dto';
 import { HttpException, Errors } from '@utils/HttpException';
 import { BranchEntity } from '@entities/branches.entity';
-import { CreateBranchDto, UpdateBranchDto } from '@/dtos/branches.dto';
 import { isObjectEmpty } from '@/utils/util';
 
 export class BranchService {
-    async getBranch(): Promise<object> {
+    async getBranches(): Promise<BranchEntity[]> {
         const branches = await BranchEntity.find();
 
         return branches;
     }
 
     async createBranch(body: CreateBranchDto): Promise<BranchEntity> {
-        const [checkBranch] = await BranchEntity.findBy({ branchName: body.branchName });
+        const [branch] = await BranchEntity.findBy({ branchName: body.branchName });
 
-        if (checkBranch) {
-            throw new HttpException(403, Errors.BRANCH_ALREADY_EXISTS, `Bu filialning nomi allaqachon qo'shilgan!`);
+        if (branch) {
+            throw new HttpException(400, Errors.BRANCH_ALREADY_EXISTS, 'Bunday filial mavjud!');
         }
 
-        const user = await BranchEntity.create({ branchName: body.branchName }).save();
-        return user;
+        const newBranch = await BranchEntity.create({ branchName: body.branchName }).save();
+
+        return newBranch;
     }
 
-    async UpdateBranch(params: { id?: number }, body: Partial<UpdateBranchDto>): Promise<BranchEntity> {
+    async updateBranch(params: { id?: number }, body: Partial<UpdateBranchDto>): Promise<BranchEntity> {
         if (isObjectEmpty(params) && !params.id) {
-            throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'id param majburiy!');
+            throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'id kiritish majburiy!');
         }
 
-        const [checkBranch] = await BranchEntity.findBy({ id: params.id });
+        const [branch] = await BranchEntity.findBy({ id: params.id });
 
-        if (!checkBranch) {
-            throw new HttpException(404, Errors.BAD_REQUEST_ERROR, 'Bunday filial topilmadi!');
+        if (!branch) {
+            throw new HttpException(404, Errors.BRANCH_NOT_FOUND, 'Bunday filial topilmadi!');
         }
 
         const [checkBranchName] = await BranchEntity.findBy({ branchName: body.branchName });
 
         if (checkBranchName) {
-            throw new HttpException(403, Errors.BRANCH_ALREADY_EXISTS, `Bu filialning nomi allaqachon qo'shilgan!`);
+            throw new HttpException(403, Errors.BRANCH_ALREADY_EXISTS, 'Bu filial mavjud!');
         }
 
         const editedBranch = await BranchEntity.save({ id: params.id, ...body });

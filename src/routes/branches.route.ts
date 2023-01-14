@@ -14,9 +14,9 @@ class BranchRoute implements Routes {
     }
 
     private initializeRoutes() {
-        this.router.get('/api/branch', authorizationMiddleware, this.controller.getBranch);
-        this.router.post('/api/branch', [authorizationMiddleware, validationMiddleware(CreateBranchDto, 'body')], this.controller.postBranch);
-        this.router.patch('/api/branch/:id', [authorizationMiddleware, validationMiddleware(UpdateBranchDto, 'body')], this.controller.updateBranch);
+        this.router.get('/api/branch', authorizationMiddleware, this.controller.getBranches);
+        this.router.post('/api/branch', authorizationMiddleware, validationMiddleware(CreateBranchDto, 'body'), this.controller.createBranch);
+        this.router.patch('/api/branch/:id', authorizationMiddleware, validationMiddleware(UpdateBranchDto, 'body'), this.controller.updateBranch);
     }
 }
 

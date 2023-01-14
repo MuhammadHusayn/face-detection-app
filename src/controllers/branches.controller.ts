@@ -1,15 +1,15 @@
 import { BranchDto, CreateBranchDto, UpdateBranchDto } from '@/dtos/branches.dto';
 import { BranchService } from '@/services/branches.service';
 import { NextFunction, Request, Response } from 'express';
-import { serializer } from '@/utils/serializer';
 import { stringValuesToPrimitives } from '@/utils/util';
+import { serializer } from '@/utils/serializer';
 
 class BranchController {
     branchService = new BranchService();
 
-    getBranch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    getBranches = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const branches = await this.branchService.getBranch();
+            const branches = await this.branchService.getBranches();
 
             res.status(200).json(serializer(BranchDto, branches));
         } catch (error) {
@@ -17,15 +17,15 @@ class BranchController {
         }
     };
 
-    postBranch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    createBranch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const body: CreateBranchDto = req.body;
-
             const branch = await this.branchService.createBranch(body);
 
             res.status(201).json({
                 status: 201,
                 message: 'Branch successfully created!',
+                data: serializer(BranchDto, branch),
             });
         } catch (error) {
             next(error);
@@ -36,11 +36,13 @@ class BranchController {
         try {
             const params = stringValuesToPrimitives(req.params || {}) as { id?: number };
             const body: UpdateBranchDto = req.body;
-            const branch = await this.branchService.UpdateBranch(params, body);
+
+            const branch = await this.branchService.updateBranch(params, body);
 
             res.status(200).json({
                 status: 201,
                 message: 'Branch successfully updated!',
+                data: serializer(BranchDto, branch),
             });
         } catch (error) {
             next(error);
