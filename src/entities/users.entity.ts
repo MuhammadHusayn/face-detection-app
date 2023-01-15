@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, AfterLoad, LoadEvent,  } from 'typeorm';
+import { PrimaryGeneratedColumn, CreateDateColumn, BeforeInsert, BaseEntity, AfterLoad, ManyToOne, Entity, Column } from 'typeorm';
 import { BranchEntity } from './branches.entity';
 
 @Entity({ name: 'users' })
@@ -35,12 +35,12 @@ export class UserEntity extends BaseEntity {
     createdAt: Date;
 
     @AfterLoad()
-    getAllowedBranches(event: LoadEvent<any>) {
-        this.allowedBranches = event.entity.allowedBranches.split(':');
+    getAllowedBranches() {
+        this.allowedBranches = (this.allowedBranches as unknown as string).split(':');
     }
 
-    @AfterLoad()
-    setAllowedBranches(event: LoadEvent<any>) {
-        this.allowedBranches = event.entity.allowedBranches.split(':');
+    @BeforeInsert()
+    setAllowedBranches() {
+        this.allowedBranches = this.allowedBranches.join(':') as unknown as string[];
     }
 }

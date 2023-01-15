@@ -1,17 +1,17 @@
-import AuthController from '@controllers/auth.controller';
+import UsersController from '@controllers/users.controller';
 import { Routes } from '@interfaces/routes.interface';
 import { Router } from 'express';
 
 class AuthRoute implements Routes {
     public router = Router();
-    public controller = new AuthController();
+    public controller = new UsersController();
 
     constructor() {
         this.initializeRoutes();
     }
 
     private initializeRoutes() {
-        this.router.post('/api/users', this.controller.getUsers);
+        this.router.get('/api/users', this.controller.getUsers);
     }
 }
 

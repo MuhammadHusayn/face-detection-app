@@ -12,4 +12,25 @@ export class CreateUserDto {
 export class UserDto {
     @Expose()
     id: string;
+
+    @Expose()
+    firstName: string;
+
+    @Expose()
+    lastName: string;
+
+    @Expose()
+    userImg: string;
+
+    @Expose()
+    username: string;
+
+    @Expose()
+    allowedBranches: string[];
+
+    @Expose()
+    branch: string;
+
+    @Expose()
+    createdAt: string;
 }
