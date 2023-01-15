@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from 'typeorm';
+import { PrimaryGeneratedColumn, CreateDateColumn, BeforeInsert, BaseEntity, AfterLoad, ManyToOne, Entity, Column } from 'typeorm';
 import { BranchEntity } from './branches.entity';
 
 @Entity({ name: 'users' })
@@ -6,13 +6,13 @@ export class UserEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ type: 'varchar', nullable: false })
+    @Column({ type: 'varchar' })
     firstName: string;
 
-    @Column({ type: 'varchar', nullable: false })
+    @Column({ type: 'varchar' })
     lastName: string;
 
-    @Column({ type: 'varchar', nullable: false })
+    @Column({ type: 'varchar' })
     userImg: string;
 
     @Column({ type: 'varchar', unique: true, nullable: true })
@@ -21,11 +21,11 @@ export class UserEntity extends BaseEntity {
     @Column({ type: 'varchar', nullable: true })
     password: string;
 
-    @Column({ type: 'boolean', nullable: false })
+    @Column({ type: 'boolean' })
     isAdmin: boolean;
 
-    @Column({ type: 'varchar', nullable: false })
-    allowedBranches: string;
+    @Column({ type: 'varchar' })
+    allowedBranches: string[];
 
     @ManyToOne(() => BranchEntity, branch => branch.users)
     branch: BranchEntity;
@@ -33,4 +33,14 @@ export class UserEntity extends BaseEntity {
     @Column({ type: 'datetime' })
     @CreateDateColumn()
     createdAt: Date;
+
+    @AfterLoad()
+    getAllowedBranches() {
+        this.allowedBranches = (this.allowedBranches as unknown as string).split(':');
+    }
+
+    @BeforeInsert()
+    setAllowedBranches() {
+        this.allowedBranches = this.allowedBranches.join(':') as unknown as string[];
+    }
 }
