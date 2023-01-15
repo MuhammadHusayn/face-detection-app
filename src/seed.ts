@@ -18,7 +18,7 @@ export const loadSeed = async () => {
             username: 'adminfayzulloh',
             password: '7435',
             isAdmin: true,
-            allowedBranches: 'bdafd27c-6633-4af9-b64f-517823db6a43',
+            allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
             branch: branch1,
         }).save();
 
@@ -29,7 +29,7 @@ export const loadSeed = async () => {
             username: 'abdulloh',
             password: '7435',
             isAdmin: false,
-            allowedBranches: 'bdafd27c-6633-4af9-b64f-517823db6a43',
+            allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
             branch: branch2,
         }).save();
 
@@ -40,7 +40,7 @@ export const loadSeed = async () => {
             username: 'adminhasan',
             password: '7435',
             isAdmin: true,
-            allowedBranches: 'bdafd27c-6633-4af9-b64f-517823db6a43',
+            allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
             branch: branch1,
         }).save();
 
@@ -51,7 +51,7 @@ export const loadSeed = async () => {
             username: 'ali',
             password: '7435',
             isAdmin: false,
-            allowedBranches: 'bdafd27c-6633-4af9-b64f-517823db6a43',
+            allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
             branch: branch3,
         }).save();
 
@@ -62,7 +62,7 @@ export const loadSeed = async () => {
             username: 'vali',
             password: '7435',
             isAdmin: false,
-            allowedBranches: 'bdafd27c-6633-4af9-b64f-517823db6a43',
+            allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
             branch: branch4,
         }).save();
     }
