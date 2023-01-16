@@ -3,6 +3,7 @@ import errorMiddleware from '@middlewares/error.middleware';
 import { Routes } from '@interfaces/routes.interface';
 import { logger, stream } from '@utils/logger';
 import swaggerUi from 'swagger-ui-express';
+import cookieParser from 'cookie-parser';
 import { DataSource } from 'typeorm';
 import { loadSeed } from './seed';
 import express from 'express';
@@ -54,6 +55,7 @@ class App {
     private initializeMiddlewares() {
         this.app.use(morgan(process.env.LOG_FORMAT as string, { stream }));
         this.app.use(cors(CORS_OPTIONS));
+        this.app.use(cookieParser());
         this.app.use(hpp());
         this.app.use(helmet());
         this.app.use(express.json());

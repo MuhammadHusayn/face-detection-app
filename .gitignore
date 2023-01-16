@@ -1,8 +1,8 @@
 # sqlite database
 *.sqlite
 
-# ssl keys direction
-.well-known
+# uploads folder
+uploads
 
 # Logs
 logs
