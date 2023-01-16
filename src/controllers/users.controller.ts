@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserDto, CreateUserDto } from '@dtos/users.dto';
 import { UsersService } from '@services/users.service';
-import { serializer } from '@utils/serializer';
+import { serializer } from '@/shared/serializer';
 
 class UsersController {
     authService = new UsersService();

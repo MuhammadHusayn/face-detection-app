@@ -1,5 +1,5 @@
 import { RequestHandler, NextFunction, Request, Response } from 'express';
-import { HttpException, Errors } from '@utils/HttpException';
+import { HttpException, Errors } from '@/shared/HttpException';
 import { validate, ValidationError } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 

@@ -1,4 +1,4 @@
-import { HttpException, Errors } from '@utils/HttpException';
+import { HttpException, Errors } from '@/shared/HttpException';
 import { plainToInstance } from 'class-transformer';
 
 export const serializer = <T>(dto: T, data: KeyValueObjectType | KeyValueObjectType[] | null): T | T[] => {

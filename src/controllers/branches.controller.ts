@@ -1,8 +1,8 @@
 import { BranchDto, CreateBranchDto, UpdateBranchDto } from '@/dtos/branches.dto';
 import { BranchService } from '@/services/branches.service';
 import { NextFunction, Request, Response } from 'express';
-import { stringValuesToPrimitives } from '@/utils/util';
-import { serializer } from '@/utils/serializer';
+import { stringValuesToPrimitives } from '@/shared/util';
+import { serializer } from '@/shared/serializer';
 
 class BranchController {
     branchService = new BranchService();

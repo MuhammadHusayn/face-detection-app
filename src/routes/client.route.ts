@@ -1,9 +1,8 @@
 import authorizationMiddleware from '@middlewares/authorization.middleware';
-import { Routes } from '@interfaces/routes.interface';
 import { Router, Request, Response } from 'express';
 import path from 'path';
 
-class ClientRoute implements Routes {
+class ClientRoute {
     public router = Router();
 
     constructor() {
