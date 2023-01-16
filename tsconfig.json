@@ -32,6 +32,7 @@
       "@config": ["config"],
       "@config/*": ["config/*"],
       "@controllers/*": ["controllers/*"],
+      "@lib/*": ["lib/*"],
       "@middlewares/*": ["middlewares/*"],
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
