@@ -1,7 +1,6 @@
 import { DataSourceOptions } from 'typeorm';
 import path from 'path';
 
-// database config options
 export const DB_CONFIG: DataSourceOptions = {
     type: 'sqlite',
     database: process.env.DB_NAME as string,

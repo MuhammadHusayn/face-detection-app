@@ -1,5 +1,5 @@
-import { IsString, MaxLength, NotEquals } from 'class-validator';
 import { Expose, Transform, TransformFnParams } from 'class-transformer';
+import { IsString, MaxLength, NotEquals } from 'class-validator';
 
 export class BranchDto {
     @Expose()
