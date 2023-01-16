@@ -1,7 +1,7 @@
 import { CreateBranchDto, UpdateBranchDto } from '@dtos/branches.dto';
 import { HttpException, Errors } from '@shared/HttpException';
 import { BranchEntity } from '@entities/branches.entity';
-import { isObjectEmpty } from '@shared/util';
+import { isObjectEmpty } from '@shared/utils';
 
 export class BranchService {
     async getBranches(): Promise<BranchEntity[]> {
