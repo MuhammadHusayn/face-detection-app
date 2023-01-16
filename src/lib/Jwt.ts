@@ -1,4 +1,4 @@
-import { HttpException, Errors } from '@utils/HttpException';
+import { HttpException, Errors } from '@shared/HttpException';
 import { sign, verify } from 'jsonwebtoken';
 
 export interface IAccessTokenPayload {
