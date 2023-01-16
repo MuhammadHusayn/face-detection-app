@@ -7,7 +7,6 @@ const alert_wrapper = document.querySelector('.alert_wrapper')
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault()
-    console.log(input_login);
     input_login.style.borderColor = '#dee2e6'
 
     if(!input_login.value){
@@ -21,12 +20,11 @@ form.addEventListener('submit', async (e) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: inputLogin.value,
-                password: inputPassword.value,
+                email: inputLogin.value.toString(),
+                password: inputPassword.value.toString(),
             })
         })
-
-        if(response.redirected == true){
+        if(response.redirected){
             window.location = '/'
         } else {
             const data = await response.json()
