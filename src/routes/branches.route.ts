@@ -1,11 +1,10 @@
-import authorizationMiddleware from '@/middlewares/authorization.middleware';
-import validationMiddleware from '@/middlewares/validation.middleware';
-import { CreateBranchDto, UpdateBranchDto } from '@/dtos/branches.dto';
-import BranchController from '@/controllers/branches.controller';
-import { Routes } from '@interfaces/routes.interface';
+import authorizationMiddleware from '@middlewares/authorization.middleware';
+import validationMiddleware from '@middlewares/validation.middleware';
+import { CreateBranchDto, UpdateBranchDto } from '@dtos/branches.dto';
+import BranchController from '@controllers/branches.controller';
 import { Router } from 'express';
 
-class BranchRoute implements Routes {
+class BranchRoute {
     public router = Router();
     public controller = new BranchController();
 

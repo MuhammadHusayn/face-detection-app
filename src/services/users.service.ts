@@ -1,4 +1,4 @@
-import { HttpException, Errors } from '@utils/HttpException';
+import { HttpException, Errors } from '@shared/HttpException';
 import { BranchEntity } from '@entities/branches.entity';
 import { UserEntity } from '@entities/users.entity';
 import { CreateUserDto } from '@dtos/users.dto';

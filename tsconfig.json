@@ -37,7 +37,7 @@
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
-      "@utils/*": ["utils/*"],
+      "@shared/*": ["shared/*"],
       "@data-sources/*": ["data-sources/*"],
       "@entities/*": ["entities/*"],
       "@enums/*": ["types/enums/*"],
