@@ -22,9 +22,9 @@ export class BranchService {
         return newBranch;
     }
 
-    async updateBranch(params: { id?: number }, body: Partial<UpdateBranchDto>): Promise<BranchEntity> {
+    async updateBranch(params: { id?: string }, body: Partial<UpdateBranchDto>): Promise<BranchEntity> {
         if (isObjectEmpty(params) && !params.id) {
-            throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'id kiritish majburiy!');
+            throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
         }
 
         const [branch] = await BranchEntity.findBy({ id: params.id });
@@ -36,7 +36,7 @@ export class BranchService {
         const [checkBranchName] = await BranchEntity.findBy({ branchName: body.branchName });
 
         if (checkBranchName) {
-            throw new HttpException(403, Errors.BRANCH_ALREADY_EXISTS, 'Bu filial mavjud!');
+            throw new HttpException(403, Errors.BRANCH_ALREADY_EXISTS, 'Bunday filial mavjud!');
         }
 
         const editedBranch = await BranchEntity.save({ id: params.id, ...body });

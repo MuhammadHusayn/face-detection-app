@@ -1,12 +1,45 @@
-import { IsString } from 'class-validator';
-import { Expose } from 'class-transformer';
+import { IsString, IsEmail, MaxLength, MinLength, NotEquals, IsUUID, IsAlphanumeric, IsBoolean, ValidateIf } from 'class-validator';
+import { Expose, Type, Transform, TransformFnParams } from 'class-transformer';
+import { BranchDto } from './branches.dto';
 
 export class CreateUserDto {
-    @IsString()
-    username: string;
+    @ValidateIf(dto => dto.isAdmin)
+    @IsEmail()
+    @MaxLength(100)
+    @NotEquals('')
+    @Transform(({ value }: TransformFnParams) => value?.trim())
+    email: string;
 
+    @ValidateIf(dto => dto.isAdmin)
     @IsString()
+    @MinLength(4)
+    @MaxLength(16)
+    @NotEquals('')
+    @Transform(({ value }: TransformFnParams) => value?.trim())
     password: string;
+
+    @MaxLength(50)
+    @NotEquals('')
+    @IsAlphanumeric()
+    @Transform(({ value }: TransformFnParams) => value?.trim())
+    firstName: string;
+
+    @NotEquals('')
+    @MaxLength(50)
+    @IsAlphanumeric()
+    @Transform(({ value }: TransformFnParams) => value?.trim())
+    lastName: string;
+
+    @IsUUID(undefined, { each: true })
+    @Transform(({ value }: TransformFnParams) => value.split(':'))
+    allowedBranches: string[];
+
+    @IsUUID()
+    branch: string;
+
+    @IsBoolean()
+    @Transform(({ value }: TransformFnParams) => (value === 'true' ? true : value === 'false' ? false : null))
+    isAdmin: boolean;
 }
 
 export class UserDto {
@@ -23,13 +56,14 @@ export class UserDto {
     userImg: string;
 
     @Expose()
-    username: string;
+    email: string;
 
     @Expose()
     allowedBranches: string[];
 
     @Expose()
-    branch: string;
+    @Type(() => BranchDto)
+    branch: BranchDto;
 
     @Expose()
     createdAt: string;

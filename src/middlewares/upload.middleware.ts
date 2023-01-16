@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
 import { HttpException, Errors } from '@utils/HttpException';
+import { Request, Response, NextFunction } from 'express';
 import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -9,9 +9,9 @@ type FileNameCallback = (error: HttpException | null, filename: string) => void;
 
 const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allowedFileSize: number, reqFileKeyName: string) => {
     return (req: Request, res: Response, next: NextFunction) => {
-        // create temp folder for file upload if not exists
+        // check folder for file upload
         if (!fs.existsSync(uploadFolder)) {
-            return next(new HttpException(500, Errors.INTERNAL_ERROR, 'File upload error: uploadFolder does not exist in disk!'));
+            return next(new HttpException(500, Errors.INTERNAL_ERROR, `File upload error: ${uploadFolder} does not exist in disk!`));
         }
 
         // multer disk storage config
@@ -20,8 +20,9 @@ const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allo
                 cb(null, uploadFolder);
             },
             filename: (req: Request, file: Express.Multer.File, cb: FileNameCallback) => {
-                const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-                cb(null, `${uniqueSuffix}-${file.originalname.toLocaleLowerCase().replace(/\s/g, '')}`);
+                const ext = path.extname(file.originalname);
+
+                cb(null, `${Date.now()}-${String(Math.round(Math.random() * 1e9)).padEnd(15, '0') + ext}`);
             },
         });
 
@@ -73,8 +74,8 @@ const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allo
                     );
                 }
 
-                if (!req.file) {
-                    throw new HttpException(400, Errors.BAD_INPUT_ERROR, 'File upload error: file body is required!');
+                if (!req[reqFileKeyName as keyof typeof req]) {
+                    throw new HttpException(400, Errors.BAD_INPUT_ERROR, `File upload error: ${reqFileKeyName} body is required!`);
                 }
 
                 return next();

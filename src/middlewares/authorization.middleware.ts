@@ -18,6 +18,8 @@ const authorizationMiddleware = async (req: Request, res: Response, next: NextFu
             return res.clearCookie('accessToken').redirect('/login');
         }
 
+        req.reqUser = user;
+
         next();
     } catch (error) {
         next(error);

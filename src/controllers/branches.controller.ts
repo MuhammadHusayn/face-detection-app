@@ -34,7 +34,7 @@ class BranchController {
 
     updateBranch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const params = stringValuesToPrimitives(req.params || {}) as { id?: number };
+            const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
             const body: UpdateBranchDto = req.body;
 
             const branch = await this.branchService.updateBranch(params, body);
