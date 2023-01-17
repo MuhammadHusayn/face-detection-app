@@ -4,9 +4,9 @@ import { UserEntity } from '@entities/users.entity';
 @Entity({ name: 'branches' })
 export class BranchEntity extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
-    @Column({ type: 'varchar', unique: true, nullable: false })
+    @Column({ type: 'varchar', unique: true })
     branchName: string;
 
     @OneToMany(() => UserEntity, user => user.branch)

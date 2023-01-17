@@ -1,37 +1,70 @@
-import { IsEmail, IsString, MaxLength, NotEquals } from 'class-validator';
-import { Expose, Transform, TransformFnParams } from 'class-transformer';
+import { IsString, IsEmail, MaxLength, MinLength, NotEquals, IsUUID, IsAlphanumeric, IsBoolean, ValidateIf } from 'class-validator';
+import { Expose, Type, Transform, TransformFnParams } from 'class-transformer';
+import { BranchDto } from './branches.dto';
 
 export class CreateUserDto {
-    @IsString()
+    @ValidateIf(dto => dto.isAdmin)
     @IsEmail()
     @MaxLength(100)
+    @NotEquals('')
     @Transform(({ value }: TransformFnParams) => value?.trim())
-    @NotEquals('', { message: '$property must not be empty string' })
     email: string;
 
+    @ValidateIf(dto => dto.isAdmin)
     @IsString()
+    @MinLength(4)
     @MaxLength(16)
+    @NotEquals('')
     @Transform(({ value }: TransformFnParams) => value?.trim())
-    @NotEquals('', { message: '$property must not be empty string' })
     password: string;
 
-    @IsString()
-    @MaxLength(100)
+    @MaxLength(50)
+    @NotEquals('')
+    @IsAlphanumeric()
     @Transform(({ value }: TransformFnParams) => value?.trim())
-    @NotEquals('', { message: '$property must not be empty string' })
-    fullName: string;
+    firstName: string;
+
+    @NotEquals('')
+    @MaxLength(50)
+    @IsAlphanumeric()
+    @Transform(({ value }: TransformFnParams) => value?.trim())
+    lastName: string;
+
+    @IsUUID(undefined, { each: true })
+    @Transform(({ value }: TransformFnParams) => value.split(':'))
+    allowedBranches: string[];
+
+    @IsUUID()
+    branch: string;
+
+    @IsBoolean()
+    @Transform(({ value }: TransformFnParams) => (value === 'true' ? true : value === 'false' ? false : null))
+    isAdmin: boolean;
 }
 
 export class UserDto {
     @Expose()
-    userId: number;
+    id: string;
+
+    @Expose()
+    firstName: string;
+
+    @Expose()
+    lastName: string;
+
+    @Expose()
+    userImg: string;
 
     @Expose()
     email: string;
 
     @Expose()
-    fullName: string;
+    allowedBranches: string[];
 
     @Expose()
-    createdAt: Date;
+    @Type(() => BranchDto)
+    branch: BranchDto;
+
+    @Expose()
+    createdAt: string;
 }
