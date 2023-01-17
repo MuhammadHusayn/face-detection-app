@@ -10,22 +10,22 @@ const alertDescripsion = document.querySelector('#swal2-content')
 const removeSort1 = document.querySelector('.sorting_asc')
 const removeSort = document.querySelectorAll('.sorting')
 
-for (const i of removeSort) {
-    i.classList.add('no-after')
-    i.classList.add('no-before')
+function remove(){
+    for (const i of removeSort) {
+        i.classList.add('no-after')
+        i.classList.add('no-before')
+    }
+    removeSort1.classList.add('no-after')
+    removeSort1.classList.add('no-before')
+    if(dataTables_empty){
+        dataTables_empty.remove()
+    }
+    search[2].remove()
+    search[4].remove()
 }
+remove()
 
-removeSort1.classList.add('no-after')
-removeSort1.classList.add('no-before')
-
-if(dataTables_empty){
-    dataTables_empty.remove()
-}
-console.log(search);
-search[2].remove()
-search[4].remove()
-
-async function alertClose(action){
+function alertClose(action){
     alertModelCloseBtn.onclick = () => {
         if(action == 200){
             alertModal.classList.add('display_none')
@@ -36,7 +36,7 @@ async function alertClose(action){
     }
 }
 
-async function editBranch(){
+function editBranch(){
     const allEditBtn = document.querySelectorAll('.edit-branch-btn')
     for (const i of allEditBtn) {
         i.onclick = (a) => {
@@ -45,7 +45,6 @@ async function editBranch(){
                 if(!addBranchInput.value){
                     addBranchInput.style.borderColor = 'red'
                 } else {
-                    console.log(a.target.dataset.id);
                     const res = await fetch(`/api/branch/${a.target.dataset.id}`, {
                         method: 'PATCH',
                         headers: {
@@ -56,7 +55,6 @@ async function editBranch(){
                         })
                     })
                     const data = await res.json()
-                    console.log(data);
                     if(data.status == 201){
                         alertTitle.textContent = `Mu'vaffaqiyat tahrirlandi`
                         alertDescripsion.textContent = `filial nomi mu'vaffaqiyat tahrirlandi`
@@ -126,6 +124,7 @@ async function getBranches(){
     
     editBranch()
 }
+getBranches()
 
 addBranchBtn.onclick = async (e) => {
     addBranchInput.style.borderColor = '#dee2e6'
@@ -142,7 +141,6 @@ addBranchBtn.onclick = async (e) => {
             })
         })
         const data = await res.json()
-        console.log(data);
         if(data.status == 201){
             alertTitle.textContent = `Mu'vaffaqiyat qo'shildi`
             alertDescripsion.textContent = `Yangi filial mu'vaffaqiyat qo'shildi`
@@ -157,5 +155,3 @@ addBranchBtn.onclick = async (e) => {
         }
     }
 }
-
-getBranches()
