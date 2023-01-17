@@ -9,23 +9,26 @@ const alertTitle = document.querySelector('.swal2-title')
 const alertDescripsion = document.querySelector('#swal2-content')
 const removeSort1 = document.querySelector('.sorting_asc')
 const removeSort = document.querySelectorAll('.sorting')
+const deleteBranchName = document.querySelector('.delete-branch-name')
+const paidContinueBtn = document.querySelector('.paid-continue-btn')
+const paidCancelBtn = document.querySelector('.paid-cancel-btn')
 
-for (const i of removeSort) {
-    i.classList.add('no-after')
-    i.classList.add('no-before')
+function remove(){
+    for (const i of removeSort) {
+        i.classList.add('no-after')
+        i.classList.add('no-before')
+    }
+    removeSort1.classList.add('no-after')
+    removeSort1.classList.add('no-before')
+    if(dataTables_empty){
+        dataTables_empty.remove()
+    }
+    search[2].remove()
+    search[4].remove()
 }
+remove()
 
-removeSort1.classList.add('no-after')
-removeSort1.classList.add('no-before')
-
-if(dataTables_empty){
-    dataTables_empty.remove()
-}
-console.log(search);
-search[2].remove()
-search[4].remove()
-
-async function alertClose(action){
+function alertClose(action){
     alertModelCloseBtn.onclick = () => {
         if(action == 200){
             alertModal.classList.add('display_none')
@@ -36,16 +39,16 @@ async function alertClose(action){
     }
 }
 
-async function editBranch(){
+function editBranch(){
     const allEditBtn = document.querySelectorAll('.edit-branch-btn')
     for (const i of allEditBtn) {
         i.onclick = (a) => {
+            addBranchInput.value = a.target.dataset.name
             addBranchBtn.onclick = async (e) => {
                 addBranchInput.style.borderColor = '#dee2e6'
                 if(!addBranchInput.value){
                     addBranchInput.style.borderColor = 'red'
                 } else {
-                    console.log(a.target.dataset.id);
                     const res = await fetch(`/api/branch/${a.target.dataset.id}`, {
                         method: 'PATCH',
                         headers: {
@@ -56,7 +59,6 @@ async function editBranch(){
                         })
                     })
                     const data = await res.json()
-                    console.log(data);
                     if(data.status == 201){
                         alertTitle.textContent = `Mu'vaffaqiyat tahrirlandi`
                         alertDescripsion.textContent = `filial nomi mu'vaffaqiyat tahrirlandi`
@@ -80,6 +82,28 @@ async function editBranch(){
     }
 }
 
+function deleteBranch(){
+    const allDeleteBtn = document.querySelectorAll('.delete-branch-btn')
+    for (const i of allDeleteBtn) {
+        i.onclick = (a) => {
+            deleteBranchName.textContent = a.target.dataset.name
+            deleteBranchName.style.color = 'red'
+            paidContinueBtn.onclick = async (e) => {
+                const res = await fetch(`/api/branch/${a.target.dataset.id}`, {
+                    method: 'DELETE'
+                })
+                const data = await res.json()
+                if(data.status == 201){
+                    alertTitle.textContent = `Mu'vaffaqiyat o'chirildi`
+                    alertDescripsion.textContent = a.target.dataset.name + ` filiali mu'vaffaqiyat o'chirildi`
+                    alertModal.classList.remove('display_none')
+                    alertClose(200)
+                }
+            }
+        }
+    }
+}
+
 async function getBranches(){
     const res = await fetch('/api/branch')
     const data = await res.json()
@@ -93,7 +117,7 @@ async function getBranches(){
         const date = document.createElement('td')
         const endWrapper = document.createElement('td')
         const editLink = document.createElement('a')
-        const editIcon = document.createElement('i')
+        const deleteLink = document.createElement('a')
         
         tr.role = 'row'
         tr.classList.add('odd')
@@ -101,22 +125,27 @@ async function getBranches(){
         id.classList.add('sorting_1')
         endWrapper.classList.add('text-end')
         editLink.classList.add('edit-branch-btn','btn', 'btn-sm', 'btn-white', 'text-success', 'me-2')
-        editIcon.classList.add('far', 'fa-edit', 'me-1')
+        deleteLink.classList.add('delete-branch-btn','btn', 'btn-sm', 'btn-white', 'text-danger')
+        
         editLink.setAttribute('data-bs-toggle', 'modal')
         editLink.setAttribute('data-bs-target', '#add_items')
-        // data-bs-toggle="modal" data-bs-target="#add_items"
-        
-        
-        
         editLink.dataset.id = i.id
+        editLink.dataset.name = i.branchName
+        
+        deleteLink.setAttribute('data-bs-toggle', 'modal')
+        deleteLink.setAttribute('data-bs-target', '#delete_paid')
+        deleteLink.dataset.id = i.id
+        deleteLink.dataset.name = i.branchName
+        
         
         id.textContent = '#'+counterId
         name.textContent = i.branchName
         date.textContent = i.createdAt.split('T')[0]
-        editLink.append(editIcon)
-        editLink.innerHTML = ' Tahrirlash'
-        endWrapper.appendChild(editLink)
+        editLink.textContent = ' Tahrirlash'
+        deleteLink.textContent = `O'chirish`
         
+        endWrapper.appendChild(editLink)
+        endWrapper.appendChild(deleteLink)
         tr.appendChild(id)
         tr.appendChild(name)
         tr.appendChild(date)
@@ -125,7 +154,9 @@ async function getBranches(){
     }
     
     editBranch()
+    deleteBranch()
 }
+getBranches()
 
 addBranchBtn.onclick = async (e) => {
     addBranchInput.style.borderColor = '#dee2e6'
@@ -142,7 +173,6 @@ addBranchBtn.onclick = async (e) => {
             })
         })
         const data = await res.json()
-        console.log(data);
         if(data.status == 201){
             alertTitle.textContent = `Mu'vaffaqiyat qo'shildi`
             alertDescripsion.textContent = `Yangi filial mu'vaffaqiyat qo'shildi`
@@ -157,5 +187,3 @@ addBranchBtn.onclick = async (e) => {
         }
     }
 }
-
-getBranches()

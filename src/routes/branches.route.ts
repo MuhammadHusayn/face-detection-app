@@ -16,6 +16,7 @@ class BranchRoute {
         this.router.get('/api/branch', authorizationMiddleware, this.controller.getBranches);
         this.router.post('/api/branch', authorizationMiddleware, validationMiddleware(CreateBranchDto, 'body'), this.controller.createBranch);
         this.router.patch('/api/branch/:id', authorizationMiddleware, validationMiddleware(UpdateBranchDto, 'body'), this.controller.updateBranch);
+        this.router.delete('/api/branch/:id', authorizationMiddleware, this.controller.deleteBranch);
     }
 }
 

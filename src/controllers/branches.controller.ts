@@ -48,6 +48,21 @@ class BranchController {
             next(error);
         }
     };
+
+    deleteBranch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
+
+            await this.branchService.deleteBranch(params);
+
+            res.status(200).json({
+                status: 201,
+                message: 'Branch successfully deleted!',
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 export default BranchController;

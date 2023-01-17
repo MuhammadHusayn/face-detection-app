@@ -23,7 +23,7 @@ export class BranchService {
     }
 
     async updateBranch(params: { id?: string }, body: Partial<UpdateBranchDto>): Promise<BranchEntity> {
-        if (isObjectEmpty(params) && !params.id) {
+        if (isObjectEmpty(params) || !params.id || params.id == undefined) {
             throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
         }
 
@@ -44,5 +44,19 @@ export class BranchService {
         const editedBranch = await BranchEntity.save({ id: params.id, ...body });
 
         return editedBranch;
+    }
+
+    async deleteBranch(params: { id?: string }): Promise<void> {
+        if (isObjectEmpty(params) || !params.id || params.id == undefined) {
+            throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
+        }
+
+        const [branch] = await BranchEntity.find({where: {id: params.id}});
+
+        if (!branch) {
+            throw new HttpException(404, Errors.BRANCH_NOT_FOUND, 'Bunday filial topilmadi!');
+        }
+
+        await BranchEntity.delete({ id: params.id });
     }
 }
