@@ -27,9 +27,11 @@ export class BranchService {
             throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
         }
 
-        const [branch] = await BranchEntity.findBy({ id: params.id });
+        const branch = await BranchEntity.find();
 
-        if (!branch) {
+        const rea = branch.filter(el => el.id == params.id);
+
+        if (!rea.length) {
             throw new HttpException(404, Errors.BRANCH_NOT_FOUND, 'Bunday filial topilmadi!');
         }
 
