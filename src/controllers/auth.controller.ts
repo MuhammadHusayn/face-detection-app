@@ -20,7 +20,7 @@ class AuthController {
 
     logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            res.clearCookie('accessToken').redirect('/');
+            res.clearCookie('accessToken').redirect('/login');
         } catch (error) {
             next(error);
         }
