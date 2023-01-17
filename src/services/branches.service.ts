@@ -45,4 +45,20 @@ export class BranchService {
 
         return editedBranch;
     }
+
+    async deleteBranch(params: { id?: string }): Promise<void> {
+        if (isObjectEmpty(params) && !params.id) {
+            throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
+        }
+
+        const branch = await BranchEntity.find();
+
+        const checkIfExists = branch.filter(el => el.id == params.id);
+
+        if (!checkIfExists.length) {
+            throw new HttpException(404, Errors.BRANCH_NOT_FOUND, 'Bunday filial topilmadi!');
+        }
+
+        await BranchEntity.delete({ id: params.id });
+    }
 }
