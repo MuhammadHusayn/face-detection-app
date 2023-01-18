@@ -1,5 +1,6 @@
+import { UserDto, CreateUserDto, UpdateUserDto } from '@dtos/users.dto';
+import { stringValuesToPrimitives } from '@/shared/utils';
 import { NextFunction, Request, Response } from 'express';
-import { UserDto, CreateUserDto } from '@dtos/users.dto';
 import { UsersService } from '@services/users.service';
 import { serializer } from '@shared/serializer';
 
@@ -26,6 +27,24 @@ class UsersController {
             res.status(200).json({
                 status: 200,
                 message: 'The user successfully created!',
+                data: serializer(UserDto, user),
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    updateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const body = req.body as UpdateUserDto;
+            const reqFile = req.file as Express.Multer.File;
+            const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
+
+            const user = await this.authService.updateUser(body, reqFile, params);
+
+            res.status(200).json({
+                status: 200,
+                message: 'The user successfully update!',
                 data: serializer(UserDto, user),
             });
         } catch (error) {

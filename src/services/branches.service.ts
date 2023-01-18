@@ -51,7 +51,7 @@ export class BranchService {
             throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
         }
 
-        const [branch] = await BranchEntity.find({where: {id: params.id}});
+        const [branch] = await BranchEntity.find({ where: { id: params.id } });
 
         if (!branch) {
             throw new HttpException(404, Errors.BRANCH_NOT_FOUND, 'Bunday filial topilmadi!');
