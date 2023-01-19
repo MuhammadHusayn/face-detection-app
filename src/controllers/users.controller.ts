@@ -56,11 +56,11 @@ class UsersController {
         try {
             const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
 
-            const user = await this.authService.deleteUser(params);
+            await this.authService.deleteUser(params);
 
             res.status(200).json({
                 status: 200,
-                message: 'The user successfully delete!'
+                message: 'The user successfully delete!',
             });
         } catch (error) {
             next(error);

@@ -19,48 +19,48 @@ export const loadSeed = async () => {
             branch: branch1,
         }).save();
 
-    //     await UserEntity.create({
-    //         firstName: 'Abdulloh',
-    //         lastName: 'Karimov',
-    //         userImg: 'PATH/TEST',
-    //         email: 'abdulloh@gmail.com',
-    //         password: '7435',
-    //         isAdmin: false,
-    //         allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
-    //         branch: branch2,
-    //     }).save();
+        //     await UserEntity.create({
+        //         firstName: 'Abdulloh',
+        //         lastName: 'Karimov',
+        //         userImg: 'PATH/TEST',
+        //         email: 'abdulloh@gmail.com',
+        //         password: '7435',
+        //         isAdmin: false,
+        //         allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
+        //         branch: branch2,
+        //     }).save();
 
-    //     await UserEntity.create({
-    //         firstName: 'Hasan',
-    //         lastName: 'Ilhomov',
-    //         userImg: 'PATH/TEST',
-    //         email: 'adminhasan@gmail.com',
-    //         password: '7435',
-    //         isAdmin: true,
-    //         allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
-    //         branch: branch1,
-    //     }).save();
+        //     await UserEntity.create({
+        //         firstName: 'Hasan',
+        //         lastName: 'Ilhomov',
+        //         userImg: 'PATH/TEST',
+        //         email: 'adminhasan@gmail.com',
+        //         password: '7435',
+        //         isAdmin: true,
+        //         allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
+        //         branch: branch1,
+        //     }).save();
 
-    //     await UserEntity.create({
-    //         firstName: 'Ali',
-    //         lastName: 'Maxmudov',
-    //         userImg: 'PATH/TEST',
-    //         email: 'ali@gmail.com',
-    //         password: '7435',
-    //         isAdmin: false,
-    //         allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
-    //         branch: branch3,
-    //     }).save();
+        //     await UserEntity.create({
+        //         firstName: 'Ali',
+        //         lastName: 'Maxmudov',
+        //         userImg: 'PATH/TEST',
+        //         email: 'ali@gmail.com',
+        //         password: '7435',
+        //         isAdmin: false,
+        //         allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
+        //         branch: branch3,
+        //     }).save();
 
-    //     await UserEntity.create({
-    //         firstName: 'Vali',
-    //         lastName: 'Jurayev',
-    //         userImg: 'PATH/TEST',
-    //         email: 'vali@gmail.com',
-    //         password: '7435',
-    //         isAdmin: false,
-    //         allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
-    //         branch: branch4,
-    //     }).save();
+        //     await UserEntity.create({
+        //         firstName: 'Vali',
+        //         lastName: 'Jurayev',
+        //         userImg: 'PATH/TEST',
+        //         email: 'vali@gmail.com',
+        //         password: '7435',
+        //         isAdmin: false,
+        //         allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
+        //         branch: branch4,
+        //     }).save();
     }
 };
