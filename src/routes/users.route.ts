@@ -18,16 +18,19 @@ class AuthRoute {
         this.router.get('/api/users', authorizationMiddleware, this.controller.getUsers);
         this.router.post(
             '/api/users',
+            authorizationMiddleware,
             uploadMiddleware(UPLOAD_FOLDER, PROFILE_IMAGE_TYPES, PROFILE_IMAGE_SIZE, 'file', true),
             validationMiddleware(CreateUserDto),
             this.controller.createUser,
         );
         this.router.patch(
             '/api/users/:id',
+            authorizationMiddleware,
             uploadMiddleware(UPLOAD_FOLDER, PROFILE_IMAGE_TYPES, PROFILE_IMAGE_SIZE, 'file', false),
             validationMiddleware(UpdateUserDto, 'body', true),
             this.controller.updateUser,
         );
+        this.router.delete('/api/users/:id', authorizationMiddleware, this.controller.deleteUser);
     }
 }
 

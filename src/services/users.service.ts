@@ -44,11 +44,31 @@ export class UsersService {
         }
 
         const user = await UserEntity.save({ id: params.id, ...data, userImg: reqFile ? reqFile.filename : checkUser.userImg });
-
+        
         if (reqFile) {
-            await fs.unlinkSync(path.join(__dirname, '../../uploads/', checkUser.userImg));
+            const check = await fs.existsSync(path.join(__dirname, '../../uploads/', checkUser.userImg))
+            if(check){
+                await fs.unlinkSync(path.join(__dirname, '../../uploads/', checkUser.userImg));
+            }
         }
 
         return user;
+    }
+
+    async deleteUser(params: { id?: string }): Promise<void> {
+        const [checkUser] = await UserEntity.findBy({ id: params.id });
+
+        if (!checkUser) {
+            throw new HttpException(404, Errors.USER_NOT_EXISTS, 'Ishchi topilmadi!');
+        }
+
+        const user = await UserEntity.delete({ id: params.id });
+
+        if (checkUser) {
+            const check = await fs.existsSync(path.join(__dirname, '../../uploads/', checkUser.userImg))
+            if(check){
+                await fs.unlinkSync(path.join(__dirname, '../../uploads/', checkUser.userImg));
+            }
+        }
     }
 }
