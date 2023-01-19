@@ -27,11 +27,9 @@ export class BranchService {
             throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
         }
 
-        const branch = await BranchEntity.find();
+        const [branch] = await BranchEntity.findBy({ id: params.id });
 
-        const rea = branch.filter(el => el.id == params.id);
-
-        if (!rea.length) {
+        if (!branch) {
             throw new HttpException(404, Errors.BRANCH_NOT_FOUND, 'Bunday filial topilmadi!');
         }
 
@@ -51,7 +49,7 @@ export class BranchService {
             throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
         }
 
-        const [branch] = await BranchEntity.find({where: {id: params.id}});
+        const [branch] = await BranchEntity.find({ where: { id: params.id } });
 
         if (!branch) {
             throw new HttpException(404, Errors.BRANCH_NOT_FOUND, 'Bunday filial topilmadi!');

@@ -38,7 +38,7 @@ export class UserEntity extends BaseEntity {
     private saltRounds = 15;
 
     @AfterLoad()
-    afterInsert() {
+    afterLoad() {
         // parse allowed branches before returning result
         this.allowedBranches = (this.allowedBranches as unknown as string).split(':');
     }
