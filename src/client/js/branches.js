@@ -2,6 +2,7 @@ const search = document.querySelectorAll('.row')
 const wrapper = document.querySelector('tbody')
 const dataTables_empty = document.querySelector('.dataTables_empty')
 const addBranchBtn = document.querySelector('.bank-save-btn')
+const addBranchBtnGlobal = document.querySelector('.add_branch_btn')
 const addBranchInput = document.querySelector('.form-control-addbranch')
 const alertModal = document.querySelector('.swal2-container')
 const alertModelCloseBtn = document.querySelector('.swal2-confirm')
@@ -42,6 +43,10 @@ function alertClose(action){
 }
 
 // EVENTS
+
+addBranchBtnGlobal.onclick = async (e) => {
+    addBranchInput.value = ''
+}
 
 addBranchBtn.onclick = async (e) => {
     addBranchInput.style.borderColor = '#dee2e6'
