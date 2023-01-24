@@ -29,7 +29,7 @@ export class UserEntity extends BaseEntity {
     allowedBranches: string[];
 
     @ManyToOne(() => BranchEntity, branch => branch.users, { nullable: false })
-    branch: BranchEntity | string;
+    branch: BranchEntity;
 
     @Column({ type: 'datetime' })
     @CreateDateColumn()

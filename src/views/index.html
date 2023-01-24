@@ -15,6 +15,7 @@
 <body class="nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme">
     <div class="main-wrapper">
         <div class="header header-one">
+            
             <div class="header-left header-left-one">
                 <!-- <a href="index.html" class="logo">
                     <img src="assets/img/logo.png" alt="Logo">
@@ -26,24 +27,27 @@
                     <img src="assets/img/logo-small.png" alt="Logo" width="30" height="30">
                 </a> -->
             </div>
+            
+            
             <a href="javascript:void(0);" id="toggle_btn">
                 <i class="fas fa-bars"></i>
             </a>
+            
+            
             <div class="top-nav-search">
                 <form>
                     <input type="text" class="form-control" placeholder="Search here">
                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                 </form>
             </div>
+            
+            
             <a class="mobile_btn" id="mobile_btn">
                 <i class="fas fa-bars"></i>
             </a>
+            
+            
             <ul class="nav nav-tabs user-menu">
-
-                <li class="nav-item dropdown">
-                </li>
-
-
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
                         <span class="user-img">
@@ -53,15 +57,13 @@
                         <span>Admin</span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="profile.html"><i data-feather="user" class="me-1"></i>
-                            Profile</a>
-                        <a class="dropdown-item" href="settings.html"><i data-feather="settings" class="me-1"></i>
-                            Settings</a>
-                        <a class="dropdown-item" href="/api/logout"><i data-feather="log-out" class="me-1"></i>
-                            Logout</a>
+                        <a class="dropdown-item" href="profile.html"><i data-feather="user" class="me-1"></i> Profile</a>
+                        <a class="dropdown-item" href="settings.html"><i data-feather="settings" class="me-1"></i> Settings</a>
+                        <a class="dropdown-item" href="/api/logout"><i data-feather="log-out" class="me-1"></i> Logout</a>
                     </div>
                 </li>
             </ul>
+            
         </div>
 
         <div class="sidebar" id="sidebar">
@@ -69,10 +71,13 @@
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
                         <li class="active">
-                            <a href="/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> <span>Dashboard</span></a>
+                            <a href="/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> <span>Asosiy menu</span></a>
                         </li>
                         <li class="">
-                            <a href="/branches"><i data-feather="star"></i> <span>Items</span></a>
+                            <a href="/branches"><i data-feather="star"></i> <span>Filiallar</span></a>
+                        </li>
+                        <li class="">
+                            <a href="/users"><i data-feather="star"></i> <span>Hodimlar</span></a>
                         </li>
                     </ul>
                 </div>

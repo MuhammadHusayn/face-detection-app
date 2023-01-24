@@ -13,6 +13,8 @@ const deleteBranchName = document.querySelector('.delete-branch-name')
 const paidContinueBtn = document.querySelector('.paid-continue-btn')
 const paidCancelBtn = document.querySelector('.paid-cancel-btn')
 
+// OTHER-FUNCTION
+
 function remove(){
     for (const i of removeSort) {
         i.classList.add('no-after')
@@ -38,6 +40,40 @@ function alertClose(action){
         }
     }
 }
+
+// EVENTS
+
+addBranchBtn.onclick = async (e) => {
+    addBranchInput.style.borderColor = '#dee2e6'
+    if(!addBranchInput.value){
+        addBranchInput.style.borderColor = 'red'
+    } else {
+        const res = await fetch('/api/branch', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                branchName: addBranchInput.value
+            })
+        })
+        const data = await res.json()
+        if(data.status == 201){
+            alertTitle.textContent = `Mu'vaffaqiyat qo'shildi`
+            alertDescripsion.textContent = `Yangi filial mu'vaffaqiyat qo'shildi`
+            alertModal.classList.remove('display_none')
+            addBranchInput.value = ''
+            alertClose(200)
+        } else if(data.status == 403){
+            alertTitle.textContent = `Xatolik`
+            alertDescripsion.textContent = `Bu filial qo'shilgan !`
+            alertModal.classList.remove('display_none')
+            alertClose(403)
+        }
+    }
+}
+
+// BRANCHES
 
 function editBranch(){
     const allEditBtn = document.querySelectorAll('.edit-branch-btn')
@@ -93,9 +129,15 @@ function deleteBranch(){
                     method: 'DELETE'
                 })
                 const data = await res.json()
+                console.log(data);
                 if(data.status == 201){
                     alertTitle.textContent = `Mu'vaffaqiyat o'chirildi`
                     alertDescripsion.textContent = a.target.dataset.name + ` filiali mu'vaffaqiyat o'chirildi`
+                    alertModal.classList.remove('display_none')
+                    alertClose(200)
+                } else if (data.status == 403) {
+                    alertTitle.textContent = `Xatolik !!!`
+                    alertDescripsion.textContent = `bu filialga qaysidir hodim ulangan`
                     alertModal.classList.remove('display_none')
                     alertClose(200)
                 }
@@ -157,33 +199,3 @@ async function getBranches(){
     deleteBranch()
 }
 getBranches()
-
-addBranchBtn.onclick = async (e) => {
-    addBranchInput.style.borderColor = '#dee2e6'
-    if(!addBranchInput.value){
-        addBranchInput.style.borderColor = 'red'
-    } else {
-        const res = await fetch('/api/branch', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                branchName: addBranchInput.value
-            })
-        })
-        const data = await res.json()
-        if(data.status == 201){
-            alertTitle.textContent = `Mu'vaffaqiyat qo'shildi`
-            alertDescripsion.textContent = `Yangi filial mu'vaffaqiyat qo'shildi`
-            alertModal.classList.remove('display_none')
-            addBranchInput.value = ''
-            alertClose(200)
-        } else if(data.status == 403){
-            alertTitle.textContent = `Xatolik`
-            alertDescripsion.textContent = `Bu filial qo'shilgan !`
-            alertModal.classList.remove('display_none')
-            alertClose(403)
-        }
-    }
-}

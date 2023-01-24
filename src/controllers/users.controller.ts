@@ -21,6 +21,8 @@ class UsersController {
         try {
             const body = req.body as CreateUserDto;
             const reqFile = req.file as Express.Multer.File;
+            console.log(body);
+            
 
             const user = await this.authService.createUser(body, reqFile);
 
@@ -62,6 +64,18 @@ class UsersController {
                 status: 200,
                 message: 'The user successfully delete!',
             });
+        } catch (error) {
+            next(error);
+        }
+    };
+    
+    getUserImg = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
+
+            const userImg = await this.authService.getUserImg(params);
+
+            res.status(200).sendFile(userImg)
         } catch (error) {
             next(error);
         }
