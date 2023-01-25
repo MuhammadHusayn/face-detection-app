@@ -113,20 +113,19 @@ function getActiveBranches() {
     for (const i of branches) {
         activeBranchElement.push(i)
     }
-    const asd = activeBranchElement.filter(el => el.dataset.activeBranch == 'true')
-    let userAccessbranchesSelectValue = ''
-    for (const i of asd) {
-        userAccessbranchesSelectValue = i.dataset.id+':'+userAccessbranchesSelectValue
+    const filteredActiveBranches = activeBranchElement.filter(el => el.dataset.activeBranch == 'true')
+    const userAccessbranchesSelectValue = []
+    for (const id of filteredActiveBranches) {
+        userAccessbranchesSelectValue.push(id.dataset.id)
     }
-    userAccessbranchesSelectValue = userAccessbranchesSelectValue.substring(0, userAccessbranchesSelectValue.length-1);
     
     let returns = {
         getActives () {
-            return userAccessbranchesSelectValue
+            return userAccessbranchesSelectValue.join(':')
         },
         
         removeActive(){
-            return asd
+            return filteredActiveBranches
         },
         
         getAllChild(){
@@ -381,7 +380,6 @@ async function updateUser(){
                 if (userAccessbranchesSelectValue.length) {
                     formData.append('allowedBranches', userAccessbranchesSelectValue)
                 }
-                console.log(userIsadminSelect.value == '1' || userIsadminSelect.value == '2');
                 if (userIsadminSelect.value == '1' || userIsadminSelect.value == '2') {
                     if(userIsadminSelect.value == '2'){
                         formData.append('isAdmin', true)
@@ -391,16 +389,13 @@ async function updateUser(){
                         formData.append('password', '')
                     }
                 }
-                console.log(userIsadminSelect.value == 2);
                 if(userIsadminSelect.value == 2){
-                    console.log(userEmailInput.value);
                     if (userEmailInput.value) {
                         const resa = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(userEmailInput.value)
                         if(resa){
                             formData.append('email', userEmailInput.value)
                         }
                     }
-                    console.log(userPasswordInput.value);
                     if (userPasswordInput.value) {
                         formData.append('password', userPasswordInput.value)
                     }
