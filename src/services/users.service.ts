@@ -91,7 +91,7 @@ export class UsersService {
         }
 
         const check = path.join(__dirname, '../../uploads/', checkUser.userImg);
-        
-        return check
+
+        return check;
     }
 }
