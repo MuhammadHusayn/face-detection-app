@@ -78,4 +78,20 @@ export class UsersService {
             await fs.unlinkSync(path.join(__dirname, '../../uploads/', checkUser.userImg));
         }
     }
+
+    async getUserImg(params: { id?: string }): Promise<string> {
+        if (isObjectEmpty(params) || !params.id || params.id == undefined) {
+            throw new HttpException(400, Errors.BAD_REQUEST_ERROR, 'ID kiritish majburiy!');
+        }
+
+        const [checkUser] = await UserEntity.findBy({ id: params.id });
+
+        if (!checkUser) {
+            throw new HttpException(404, Errors.USER_NOT_EXISTS, 'Ishchi topilmadi!');
+        }
+
+        const check = path.join(__dirname, '../../uploads/', checkUser.userImg);
+        
+        return check
+    }
 }

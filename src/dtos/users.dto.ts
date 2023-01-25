@@ -20,13 +20,11 @@ export class CreateUserDto {
 
     @MaxLength(50)
     @NotEquals('')
-    @IsAlphanumeric()
     @Transform(({ value }: TransformFnParams) => value?.trim())
     firstName: string;
 
     @NotEquals('')
     @MaxLength(50)
-    @IsAlphanumeric()
     @Transform(({ value }: TransformFnParams) => value?.trim())
     lastName: string;
 
