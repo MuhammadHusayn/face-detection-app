@@ -1,5 +1,10 @@
 import { Expose, Transform, TransformFnParams } from 'class-transformer';
-import { IsString, MaxLength, NotEquals } from 'class-validator';
+import { IsString, MaxLength, NotEquals, IsUUID } from 'class-validator';
+
+export class IDParamDto {
+    @IsUUID()
+    id: string;
+}
 
 export class BranchDto {
     @Expose()

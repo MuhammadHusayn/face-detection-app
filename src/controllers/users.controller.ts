@@ -22,7 +22,6 @@ class UsersController {
             const body = req.body as CreateUserDto;
             const reqFile = req.file as Express.Multer.File;
             console.log(body);
-            
 
             const user = await this.authService.createUser(body, reqFile);
 
@@ -68,14 +67,14 @@ class UsersController {
             next(error);
         }
     };
-    
+
     getUserImg = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
 
             const userImg = await this.authService.getUserImg(params);
 
-            res.status(200).sendFile(userImg)
+            res.status(200).sendFile(userImg);
         } catch (error) {
             next(error);
         }
