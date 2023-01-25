@@ -13,6 +13,7 @@ class AuthRoute {
 
     private initializeRoutes() {
         this.router.post('/api/login', validationMiddleware(LoginDto, 'body'), this.controller.login);
+        this.router.get('/api/logout', this.controller.logout);
     }
 }
 

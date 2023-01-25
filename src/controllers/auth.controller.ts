@@ -17,6 +17,14 @@ class AuthController {
             next(error);
         }
     };
+
+    logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            res.clearCookie('accessToken').redirect('/login');
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 export default AuthController;
