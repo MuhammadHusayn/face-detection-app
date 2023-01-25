@@ -1,10 +1,9 @@
 import validationMiddleware from '@middlewares/validation.middleware';
 import AuthController from '@controllers/auth.controller';
-import { Routes } from '@interfaces/routes.interface';
 import { LoginDto } from '@dtos/auth.dto';
 import { Router } from 'express';
 
-class AuthRoute implements Routes {
+class AuthRoute {
     public router = Router();
     public controller = new AuthController();
 
@@ -14,6 +13,7 @@ class AuthRoute implements Routes {
 
     private initializeRoutes() {
         this.router.post('/api/login', validationMiddleware(LoginDto, 'body'), this.controller.login);
+        this.router.get('/api/logout', this.controller.logout);
     }
 }
 

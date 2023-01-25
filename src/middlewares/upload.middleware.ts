@@ -1,4 +1,4 @@
-import { HttpException, Errors } from '@utils/HttpException';
+import { HttpException, Errors } from '@/shared/HttpException';
 import { Request, Response, NextFunction } from 'express';
 import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
@@ -7,7 +7,7 @@ import fs from 'fs';
 type DestinationCallback = (error: HttpException | null, destination: string) => void;
 type FileNameCallback = (error: HttpException | null, filename: string) => void;
 
-const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allowedFileSize: number, reqFileKeyName: string) => {
+const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allowedFileSize: number, reqFileKeyName: string, required = true) => {
     return (req: Request, res: Response, next: NextFunction) => {
         // check folder for file upload
         if (!fs.existsSync(uploadFolder)) {
@@ -74,7 +74,7 @@ const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allo
                     );
                 }
 
-                if (!req[reqFileKeyName as keyof typeof req]) {
+                if (required && !req[reqFileKeyName as keyof typeof req]) {
                     throw new HttpException(400, Errors.BAD_INPUT_ERROR, `File upload error: ${reqFileKeyName} body is required!`);
                 }
 

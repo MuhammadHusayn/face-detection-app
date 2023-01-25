@@ -1,4 +1,4 @@
-import { HttpException, Errors } from '@utils/HttpException';
+import { HttpException, Errors } from '@shared/HttpException';
 import { UserEntity } from '@entities/users.entity';
 import { LoginDto } from '@dtos/auth.dto';
 import { JWT } from '@lib/Jwt';

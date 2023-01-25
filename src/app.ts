@@ -1,12 +1,11 @@
 import { CORS_OPTIONS, DB_CONFIG } from '@config';
 import errorMiddleware from '@middlewares/error.middleware';
-import { Routes } from '@interfaces/routes.interface';
-import { logger, stream } from '@utils/logger';
+import { logger, stream } from '@/shared/logger';
 import swaggerUi from 'swagger-ui-express';
+import express, { Router } from 'express';
 import cookieParser from 'cookie-parser';
+import { loadSeed } from '@shared/seed';
 import { DataSource } from 'typeorm';
-import { loadSeed } from './seed';
-import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import yaml from 'yamljs';
@@ -19,7 +18,12 @@ class App {
     public env: string;
     public port: string | number;
 
-    constructor(routes: Routes[]) {
+    constructor(
+        routes: {
+            path?: string;
+            router: Router;
+        }[],
+    ) {
         this.app = express();
         this.env = process.env.NODE_ENV || 'development';
         this.port = process.env.PORT || 3000;
@@ -62,7 +66,12 @@ class App {
         this.app.use(express.urlencoded({ extended: true }));
     }
 
-    private initializeRoutes(routes: Routes[]) {
+    private initializeRoutes(
+        routes: {
+            path?: string;
+            router: Router;
+        }[],
+    ) {
         routes.forEach(route => {
             this.app.use('/', route.router);
         });
