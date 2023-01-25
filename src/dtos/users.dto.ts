@@ -33,7 +33,7 @@ export class CreateUserDto {
     allowedBranches: string[];
 
     @IsUUID()
-    branch: string;
+    branchId: string;
 
     @IsBoolean()
     @Transform(({ value }: TransformFnParams) => (value === 'true' ? true : value === 'false' ? false : null))
@@ -73,7 +73,7 @@ export class UpdateUserDto {
     allowedBranches: string[];
 
     @IsUUID()
-    branch: string;
+    branchId: string;
 
     @IsBoolean()
     @Transform(({ value }: TransformFnParams) => (value === 'true' ? true : value === 'false' ? false : null))
