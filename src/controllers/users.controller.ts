@@ -39,7 +39,7 @@ class UsersController {
         try {
             const body = req.body as UpdateUserDto;
             const reqFile = req.file as Express.Multer.File;
-            const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
+            const params = stringValuesToPrimitives(req.params) as { id: string };
 
             const user = await this.authService.updateUser(body, reqFile, params);
 
@@ -55,13 +55,12 @@ class UsersController {
 
     deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
-
+            const params = stringValuesToPrimitives(req.params) as { id: string };
             await this.authService.deleteUser(params);
 
             res.status(200).json({
                 status: 200,
-                message: 'The user successfully delete!',
+                message: 'The user successfully deleted!',
             });
         } catch (error) {
             next(error);
@@ -70,8 +69,7 @@ class UsersController {
 
     getUserImg = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const params = stringValuesToPrimitives(req.params || {}) as { id?: string };
-
+            const params = stringValuesToPrimitives(req.params) as { id: string };
             const userImg = await this.authService.getUserImg(params);
 
             res.status(200).sendFile(userImg);

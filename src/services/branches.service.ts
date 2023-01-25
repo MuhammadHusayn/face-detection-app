@@ -57,10 +57,9 @@ export class BranchService {
 
         for (const user of users) {
             const allowedBranchIds = user.allowedBranches;
-            const branchIndex = allowedBranchIds.findIndex(id => id === params.id);
 
-            if (branchIndex !== -1) {
-                await UserEntity.update({ id: user.id }, { allowedBranches: allowedBranchIds.splice(branchIndex, 1) });
+            if (allowedBranchIds.includes(params.id)) {
+                await UserEntity.update({ id: user.id }, { allowedBranches: allowedBranchIds.filter(id => id !== params.id) });
             }
         }
 

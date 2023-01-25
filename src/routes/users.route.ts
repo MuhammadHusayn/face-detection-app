@@ -4,6 +4,7 @@ import validationMiddleware from '@middlewares/validation.middleware';
 import { CreateUserDto, UpdateUserDto } from '@dtos/users.dto';
 import uploadMiddleware from '@middlewares/upload.middleware';
 import UsersController from '@controllers/users.controller';
+import { IDParamDto } from '@dtos/branches.dto';
 import { Router } from 'express';
 
 class AuthRoute {
@@ -25,12 +26,13 @@ class AuthRoute {
         this.router.patch(
             '/api/users/:id',
             authorizationMiddleware,
+            validationMiddleware(IDParamDto, 'params'),
             uploadMiddleware(UPLOAD_FOLDER, PROFILE_IMAGE_TYPES, PROFILE_IMAGE_SIZE, 'file', false),
             validationMiddleware(UpdateUserDto, 'body', true),
             this.controller.updateUser,
         );
-        this.router.delete('/api/users/:id', authorizationMiddleware, this.controller.deleteUser);
-        this.router.get('/api/users/img/:id', authorizationMiddleware, this.controller.getUserImg);
+        this.router.delete('/api/users/:id', authorizationMiddleware, validationMiddleware(IDParamDto, 'params'), this.controller.deleteUser);
+        this.router.get('/api/users/img/:id', authorizationMiddleware, validationMiddleware(IDParamDto, 'params'), this.controller.getUserImg);
     }
 }
 
