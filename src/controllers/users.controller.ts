@@ -5,11 +5,11 @@ import { UsersService } from '@services/users.service';
 import { serializer } from '@shared/serializer';
 
 class UsersController {
-    authService = new UsersService();
+    usersService = new UsersService();
 
     getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const users = await this.authService.getUsers();
+            const users = await this.usersService.getUsers();
 
             res.status(200).json(serializer(UserDto, users));
         } catch (error) {
@@ -23,7 +23,7 @@ class UsersController {
             const reqFile = req.file as Express.Multer.File;
             console.log(body);
 
-            const user = await this.authService.createUser(body, reqFile);
+            const user = await this.usersService.createUser(body, reqFile);
 
             res.status(200).json({
                 status: 200,
@@ -41,7 +41,7 @@ class UsersController {
             const reqFile = req.file as Express.Multer.File;
             const params = stringValuesToPrimitives(req.params) as { id: string };
 
-            const user = await this.authService.updateUser(body, reqFile, params);
+            const user = await this.usersService.updateUser(body, reqFile, params);
 
             res.status(200).json({
                 status: 200,
@@ -56,7 +56,7 @@ class UsersController {
     deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const params = stringValuesToPrimitives(req.params) as { id: string };
-            await this.authService.deleteUser(params);
+            await this.usersService.deleteUser(params);
 
             res.status(200).json({
                 status: 200,
@@ -70,7 +70,7 @@ class UsersController {
     getUserImg = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const params = stringValuesToPrimitives(req.params) as { id: string };
-            const userImg = await this.authService.getUserImg(params);
+            const userImg = await this.usersService.getUserImg(params);
 
             res.status(200).sendFile(userImg);
         } catch (error) {
