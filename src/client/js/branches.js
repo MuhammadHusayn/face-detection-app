@@ -63,6 +63,7 @@ addBranchBtn.onclick = async (e) => {
             })
         })
         const data = await res.json()
+        console.log(data);
         if(data.status == 201){
             alertTitle.textContent = `Mu'vaffaqiyat qo'shildi`
             alertDescripsion.textContent = `Yangi filial mu'vaffaqiyat qo'shildi`

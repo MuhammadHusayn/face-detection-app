@@ -14,13 +14,7 @@ class BranchRoute {
 
     private initializeRoutes() {
         this.router.get('/api/branch', authorizationMiddleware, this.controller.getBranches);
-        this.router.post(
-            '/api/branch',
-            authorizationMiddleware,
-            validationMiddleware(IDParamDto, 'params'),
-            validationMiddleware(CreateBranchDto, 'body'),
-            this.controller.createBranch,
-        );
+        this.router.post('/api/branch', authorizationMiddleware, validationMiddleware(CreateBranchDto, 'body'), this.controller.createBranch);
         this.router.patch(
             '/api/branch/:id',
             authorizationMiddleware,

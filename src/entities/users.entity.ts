@@ -55,14 +55,11 @@ export class UserEntity extends BaseEntity {
     @AfterLoad()
     afterLoad() {
         // parse allowed branches before returning result
-        this.allowedBranches = (this.allowedBranches as unknown as string).split(':');
+        this.allowedBranches = (this.allowedBranches as unknown as string).split(',');
     }
 
     @BeforeInsert()
     async beforeInsert() {
-        // parse allowed branches before inserting
-        this.allowedBranches = this.allowedBranches.join(':') as unknown as string[];
-
         // hash password
         if (this.password) {
             const salt = await bcrypt.genSalt(this.saltRounds);
@@ -74,11 +71,6 @@ export class UserEntity extends BaseEntity {
 
     @BeforeUpdate()
     async beforeUpdate() {
-        // parse allowed branches before updating
-        if (this.allowedBranches) {
-            this.allowedBranches = this.allowedBranches.join(':') as unknown as string[];
-        }
-
         // hash password
         if (this.password) {
             const salt = await bcrypt.genSalt(this.saltRounds);

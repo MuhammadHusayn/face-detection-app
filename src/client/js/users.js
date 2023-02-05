@@ -231,12 +231,13 @@ async function getUsers(){
     }
     deleteUser()
     updateUser()
+    setUser()
 }
 getUsers()
 
 async function setUser(){
     userSaveBtn.onclick = async (e) => {
-        
+        console.log(e, "ADD");
         userFirstnameInput.style.borderColor = '#dee2e6'
         userLastnameInput.style.borderColor = '#dee2e6'
         userMainbranchSelect.style.borderColor = '#dee2e6'
@@ -311,7 +312,6 @@ async function setUser(){
         }
     }
 }
-setUser()
 
 async function updateUser(){
     const user = document.querySelectorAll('.user_update_btn')
@@ -334,7 +334,8 @@ async function updateUser(){
             const allowedBranches = getActiveBranches()
             const branches = allowedBranches.getAllChild()
             
-            for (const i of user.allowedBranches[0].split(',')) {
+            console.log(user.allowedBranches);
+            for (const i of user.allowedBranches) {
                 const a = branches.find(el => el.dataset.id == i)
                 a.dataset.activeBranch = 'true'
                 a.classList.add('child_active')
@@ -349,7 +350,7 @@ async function updateUser(){
             userImgInput.value = ''
             
             userSaveBtn.onclick = async (i) => {
-
+                console.log(i, 'EDIT');
                 const allowedBranches = getActiveBranches()
                 userFirstnameInput.style.borderColor = '#dee2e6'
                 userLastnameInput.style.borderColor = '#dee2e6'
@@ -362,6 +363,7 @@ async function updateUser(){
                 userImgPrev.style.borderColor = '#dee2e6'
                 
                 const userAccessbranchesSelectValue = allowedBranches.getActives()
+                console.log(userAccessbranchesSelectValue);
                 
                 const formData = new FormData()
                 

@@ -44,7 +44,9 @@ export class UsersService {
             }
         }
 
-        const user = await UserEntity.save({ ...data, id: params.id, userImg: reqFile ? reqFile.filename : checkUser.userImg });
+        console.log(data, 'asdasd');
+
+        const user = await UserEntity.save({ id: params.id, ...data, userImg: reqFile ? reqFile.filename : checkUser.userImg });
 
         if (reqFile) {
             const check = fs.existsSync(path.join(UPLOAD_FOLDER, checkUser.userImg));
