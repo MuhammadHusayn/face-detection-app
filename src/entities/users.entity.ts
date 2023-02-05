@@ -1,6 +1,18 @@
-import { PrimaryGeneratedColumn, CreateDateColumn, BeforeInsert, BaseEntity, AfterLoad, ManyToOne, Entity, Column, BeforeUpdate } from 'typeorm';
+import { ActionEntity } from './actions.entity';
 import { BranchEntity } from './branches.entity';
 import bcrypt from 'bcrypt';
+import {
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    BeforeUpdate,
+    BeforeInsert,
+    BaseEntity,
+    OneToMany,
+    AfterLoad,
+    ManyToOne,
+    Entity,
+    Column,
+} from 'typeorm';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -30,6 +42,9 @@ export class UserEntity extends BaseEntity {
 
     @ManyToOne(() => BranchEntity, branch => branch.users, { nullable: false })
     branch: BranchEntity;
+
+    @OneToMany(() => ActionEntity, action => action.user)
+    actions: ActionEntity[];
 
     @Column({ type: 'datetime' })
     @CreateDateColumn()
