@@ -15,7 +15,7 @@ export const loadSeed = async () => {
             email: 'adminfayzulloh@gmail.com',
             password: '7435',
             isAdmin: true,
-            allowedBranches: ['bdafd27c-6633-4af9-b64f-517823db6a43'],
+            allowedBranches: [branch1.id],
             branch: branch1,
         }).save();
 

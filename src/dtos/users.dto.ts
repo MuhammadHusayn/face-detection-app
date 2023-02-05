@@ -1,6 +1,7 @@
 import { IsString, IsEmail, MaxLength, MinLength, NotEquals, IsUUID, IsAlphanumeric, IsBoolean, ValidateIf } from 'class-validator';
 import { Expose, Type, Transform, TransformFnParams } from 'class-transformer';
 import { BranchDto } from './branches.dto';
+import { BranchEntity } from '@/entities/branches.entity';
 
 export class CreateUserDto {
     @ValidateIf(dto => dto.isAdmin)
@@ -33,7 +34,7 @@ export class CreateUserDto {
     allowedBranches: string[];
 
     @IsUUID()
-    branchId: string;
+    branch: BranchEntity;
 
     @IsBoolean()
     @Transform(({ value }: TransformFnParams) => (value === 'true' ? true : value === 'false' ? false : null))
@@ -73,7 +74,7 @@ export class UpdateUserDto {
     allowedBranches: string[];
 
     @IsUUID()
-    branchId: string;
+    branch: BranchEntity;
 
     @IsBoolean()
     @Transform(({ value }: TransformFnParams) => (value === 'true' ? true : value === 'false' ? false : null))
