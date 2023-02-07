@@ -16,6 +16,7 @@ class ControllersRoute {
         this.router.get('/api/controllers', authorizationMiddleware, this.controller.getControllers);
         this.router.post('/api/controllers', authorizationMiddleware, validationMiddleware(CreateControllerDto, 'body'), this.controller.createControllers);
         this.router.patch('/api/controllers/:id', authorizationMiddleware, validationMiddleware(UpdateControllerDto, 'body', true), this.controller.updateControllers);
+        this.router.delete('/api/controllers/:id', authorizationMiddleware, this.controller.deleteControllers);
     }
 }
 

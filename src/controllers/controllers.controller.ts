@@ -47,6 +47,20 @@ class ControllersController {
             next(error);
         }
     };
+
+    deleteControllers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const params = stringValuesToPrimitives(req.params) as { id: string };
+            await this.controllersService.deleteControllers(params);
+
+            res.status(200).json({
+                status: 200,
+                message: 'The controller successfully deleted!'
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 export default ControllersController;
