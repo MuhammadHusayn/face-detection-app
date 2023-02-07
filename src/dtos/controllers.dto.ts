@@ -23,7 +23,6 @@ export class ControllerDto {
     createdAt: string;
 }
 
-
 export class CreateControllerDto {
     @IsString()
     @MinLength(4)
@@ -31,7 +30,7 @@ export class CreateControllerDto {
     @NotEquals('')
     @Transform(({ value }: TransformFnParams) => value?.trim())
     name: string;
-    
+
     @IsString()
     @MaxLength(128)
     @NotEquals('')
@@ -54,7 +53,6 @@ export class CreateControllerDto {
     branch: BranchEntity;
 }
 
-
 export class UpdateControllerDto {
     @IsString()
     @MinLength(4)
@@ -62,7 +60,7 @@ export class UpdateControllerDto {
     @NotEquals('')
     @Transform(({ value }: TransformFnParams) => value?.trim())
     name: string;
-    
+
     @IsString()
     @MaxLength(128)
     @NotEquals('')

@@ -55,7 +55,7 @@ class ControllersController {
 
             res.status(200).json({
                 status: 200,
-                message: 'The controller successfully deleted!'
+                message: 'The controller successfully deleted!',
             });
         } catch (error) {
             next(error);
