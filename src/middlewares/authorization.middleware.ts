@@ -4,18 +4,19 @@ import { JWT } from '@lib/Jwt';
 
 const authorizationMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        if (!req.cookies || !req.cookies.accessToken) {
-            return res.clearCookie('accessToken').redirect('/login');
+        
+        if (!req.headers || !req.headers.authorization) {
+            return res.redirect('/login');
         }
 
-        const { accessToken } = req.cookies;
+        const { authorization } = req.headers;
 
-        const payload = JWT.verifyAccessToken(accessToken);
+        const payload = JWT.verifyAccessToken(authorization);
 
         const [user] = await UserEntity.findBy({ id: payload.userId });
 
         if (!user) {
-            return res.clearCookie('accessToken').redirect('/login');
+            return res.redirect('/login');
         }
 
         req.reqUser = user;
