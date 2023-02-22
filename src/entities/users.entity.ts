@@ -12,7 +12,10 @@ import {
     ManyToOne,
     Entity,
     Column,
+    AfterUpdate,
+    AfterInsert,
 } from 'typeorm';
+import { Logform } from 'winston';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -53,14 +56,27 @@ export class UserEntity extends BaseEntity {
     private saltRounds = 15;
 
     @AfterLoad()
-    afterLoad() {
+    async afterLoad() {
         // parse allowed branches before returning result
         this.allowedBranches = (this.allowedBranches as unknown as string).split(',');
     }
 
+    @BeforeUpdate()
+    async beforeUpdate() {        
+        console.log('before');
+        console.log(this.password);
+        
+        if (this.password) {
+            const salt = await bcrypt.genSalt(this.saltRounds);
+            const hash = await bcrypt.hash(this.password, salt);
+
+            this.password = hash;
+        }
+    }
+
     @BeforeInsert()
     async beforeInsert() {
-        // hash password
+        
         if (this.password) {
             const salt = await bcrypt.genSalt(this.saltRounds);
             const hash = await bcrypt.hash(this.password, salt);
@@ -69,18 +85,9 @@ export class UserEntity extends BaseEntity {
         }
     }
 
-    @BeforeUpdate()
-    async beforeUpdate() {
-        // hash password
-        if (this.password) {
-            const salt = await bcrypt.genSalt(this.saltRounds);
-            const hash = await bcrypt.hash(this.password, salt);
+    
 
-            this.password = hash;
-        }
-    }
-
-    static async checkPassword(password: string, hash: string) {
+    static async checkPassword(password: string, hash: string) {        
         return await bcrypt.compare(password, hash);
     }
 }

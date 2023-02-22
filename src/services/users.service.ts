@@ -42,11 +42,9 @@ export class UsersService {
                     throw new HttpException(404, Errors.BRANCH_NOT_FOUND, 'Filial topilmadi!');
                 }
             }
-        }
-
-        console.log(data, 'asdasd');
-
-        const user = await UserEntity.save({ id: params.id, ...data, userImg: reqFile ? reqFile.filename : checkUser.userImg });
+        }        
+        
+        const user = await UserEntity.save({ id: params.id, ...data, userImg: reqFile ? reqFile.filename : checkUser.userImg });        
 
         if (reqFile) {
             const check = fs.existsSync(path.join(UPLOAD_FOLDER, checkUser.userImg));

@@ -9,6 +9,7 @@ type FileNameCallback = (error: HttpException | null, filename: string) => void;
 
 const uploadMiddleware = (uploadFolder: string, allowedFileTypes: string[], allowedFileSize: number, reqFileKeyName: string, required = true) => {
     return (req: Request, res: Response, next: NextFunction) => {
+        
         // check folder for file upload
         if (!fs.existsSync(uploadFolder)) {
             return next(new HttpException(500, Errors.INTERNAL_ERROR, `File upload error: ${uploadFolder} does not exist in disk!`));

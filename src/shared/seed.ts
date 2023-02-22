@@ -12,7 +12,7 @@ export const loadSeed = async () => {
             firstName: 'Fayzulloh',
             lastName: 'Shodiyev',
             userImg: 'PATH/TEST',
-            email: 'adminfayzulloh@gmail.com',
+            email: 'fayzullohwork@gmail.com',
             password: '7435',
             isAdmin: true,
             allowedBranches: [branch1.id],

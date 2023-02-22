@@ -19,8 +19,9 @@ class AuthRoute {
         this.router.get('/api/users', authorizationMiddleware, this.controller.getUsers);
         this.router.post(
             '/api/users',
+            authorizationMiddleware,
             uploadMiddleware(UPLOAD_FOLDER, PROFILE_IMAGE_TYPES, PROFILE_IMAGE_SIZE, 'file', true),
-            validationMiddleware(CreateUserDto),
+            validationMiddleware(CreateUserDto, 'body'),
             this.controller.createUser,
         );
         this.router.patch(

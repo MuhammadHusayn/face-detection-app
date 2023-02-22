@@ -1,6 +1,8 @@
+import { LoginDto, ForgetPasswordDto, RecoverPasswordDto, RecoverPasswordTokenDto } from '@dtos/auth.dto';
 import { NextFunction, Request, Response } from 'express';
 import { AuthService } from '@services/auth.service';
-import { LoginDto } from '@dtos/auth.dto';
+import { serializer } from '@/shared/serializer';
+import { UserDto } from '@/dtos/users.dto';
 
 class AuthController {
     authService = new AuthService();
@@ -21,6 +23,36 @@ class AuthController {
     logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             res.clearCookie('accessToken').redirect('/login');
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    forgetPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const body: ForgetPasswordDto = req.body
+            const forgetPassword = await this.authService.forgetPassword(body)
+            res.status(200).json({
+                status: 201,
+                message: 'Password recover link successfully sended!',
+                data: forgetPassword
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    recoverPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const body: RecoverPasswordDto  = req.body
+            const query: any = req.query
+            const recoverPassword = await this.authService.recoverPassword(body, query)
+
+            res.status(200).json({
+                status: 201,
+                message: 'password successfully changed!',
+                data: serializer(UserDto, recoverPassword),
+            });
         } catch (error) {
             next(error);
         }

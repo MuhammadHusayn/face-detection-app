@@ -21,7 +21,6 @@ class UsersController {
         try {
             const body = req.body as CreateUserDto;
             const reqFile = req.file as Express.Multer.File;
-            console.log(body);
 
             const user = await this.usersService.createUser(body, reqFile);
 
