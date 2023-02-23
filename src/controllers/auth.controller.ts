@@ -12,9 +12,11 @@ class AuthController {
             const body: LoginDto = req.body;
             const accessToken = await this.authService.login(body);
 
-            res.cookie('accessToken', accessToken, {
-                maxAge: Number(process.env.JWT_ACCESS_EXPIRATION),
-            }).redirect('/');
+            res.json({
+                status: 200,
+                message: 'User succesfully logined !',
+                access_token: accessToken
+            })
         } catch (error) {
             next(error);
         }

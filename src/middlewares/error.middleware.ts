@@ -5,8 +5,6 @@ import { logger } from '@shared/logger';
 
 const errorMiddleware = (err: HttpException, req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log(res);
-        
         const status: number = err.status || 500;
         const error: Errors = err.error || 'INTERNAL_ERROR';
         const message: string = err.message || 'Something went wrong';
